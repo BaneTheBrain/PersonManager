@@ -30,3 +30,8 @@
                         "ee49d702-4b3d-4892-9889-0e787627cfa1",
                         "Twitter"
                     });
+
+
+delete from PersonSkills;
+delete from PersonSocialMediaAccounts;
+delete from Persons;

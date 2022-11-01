@@ -17,4 +17,8 @@
     <ProjectReference Include="..\PersonManagerService.Domain\PersonManagerService.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Queries\GetPersons\" />
+  </ItemGroup>
+
 </Project>

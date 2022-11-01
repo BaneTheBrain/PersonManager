@@ -3,5 +3,5 @@
 public sealed record PersonDto(
     string? FirstName,
     string? LastName,
-    ICollection<string>? Skills,
-    ICollection<PersonSocialMediaAccountDto>? SocialMediaAccounts);
+    ICollection<string>? PersonSkills,
+    ICollection<PersonSocialMediaAccountDto>? PersonSocialMediaAccounts);

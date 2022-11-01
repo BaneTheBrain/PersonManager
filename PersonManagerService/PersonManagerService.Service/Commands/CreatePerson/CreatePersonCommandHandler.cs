@@ -10,28 +10,26 @@ namespace PersonManagerService.Application.Commands.CreatePerson;
 public class CreatePersonCommandHandler : IRequestHandler<CreatePersonCommand, Guid>
 {
     private readonly IPersonRepository _personRepository;
-    private readonly IMediator _mediator;
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
     private readonly ILogger<CreatePersonCommandHandler> _logger;
 
 
-    public CreatePersonCommandHandler(IPersonRepository personRepository, IMediator mediator, IMapper mapper, IUnitOfWork unitOfWork, ILogger<CreatePersonCommandHandler> logger)
+    public CreatePersonCommandHandler(IPersonRepository personRepository, IMapper mapper, IUnitOfWork unitOfWork, ILogger<CreatePersonCommandHandler> logger)
     {
         _personRepository = personRepository ?? throw new ArgumentNullException(nameof(personRepository));
-        _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }
 
-    public async Task<Guid> Handle(CreatePersonCommand createPersonCommand, CancellationToken cancellationToken)
+    public async Task<Guid> Handle(CreatePersonCommand request, CancellationToken cancellationToken)
     {
         try
         {
             _logger.LogInformation($"[{nameof(CreatePersonCommandHandler)}] Adding a new person to the repository initiated.");
 
-            var person = _mapper.Map<CreatePersonCommand, Person>(createPersonCommand);
+            var person = _mapper.Map<CreatePersonCommand, Person>(request);
             _personRepository.Create(person);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 
