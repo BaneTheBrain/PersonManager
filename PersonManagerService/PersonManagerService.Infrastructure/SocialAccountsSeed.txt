@@ -1,0 +1,32 @@
+﻿migrationBuilder
+               .InsertData(
+                   schema: "dbo",
+                   table: "SocialMediaAccounts",
+                   columns: new[] { "SocialMediaAccountId", "Type" },
+                   values: new object[]
+                   {
+                        "7425e42b-09a2-42c1-9f58-0ede8ff036de",
+                        "Facebook"
+                   });
+
+            migrationBuilder
+                .InsertData(
+                    schema: "dbo",
+                    table: "SocialMediaAccounts",
+                    columns: new[] { "SocialMediaAccountId", "Type" },
+                    values: new object[]
+                    {
+                        "8284d5e8-86f9-453f-a0cd-38d2500734c8",
+                        "LinkedIn"
+                    });
+
+            migrationBuilder
+                .InsertData(
+                    schema: "dbo",
+                    table: "SocialMediaAccounts",
+                    columns: new[] { "SocialMediaAccountId", "Type" },
+                    values: new object[]
+                    {
+                        "ee49d702-4b3d-4892-9889-0e787627cfa1",
+                        "Twitter"
+                    });
