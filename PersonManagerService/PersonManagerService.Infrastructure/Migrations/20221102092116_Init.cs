@@ -56,7 +56,8 @@ namespace PersonManagerService.Persistance.Migrations
                         column: x => x.PersonId,
                         principalSchema: "dbo",
                         principalTable: "Persons",
-                        principalColumn: "PersonId");
+                        principalColumn: "PersonId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -76,13 +77,60 @@ namespace PersonManagerService.Persistance.Migrations
                         column: x => x.PersonId,
                         principalSchema: "dbo",
                         principalTable: "Persons",
-                        principalColumn: "PersonId");
+                        principalColumn: "PersonId",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_PersonSocialMediaAccounts_SocialMediaAccounts_SocialMediaAccountId",
                         column: x => x.SocialMediaAccountId,
                         principalSchema: "dbo",
                         principalTable: "SocialMediaAccounts",
-                        principalColumn: "SocialMediaAccountId");
+                        principalColumn: "SocialMediaAccountId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                schema: "dbo",
+                table: "Persons",
+                columns: new[] { "PersonId", "FirstName", "LastName" },
+                values: new object[,]
+                {
+                    { new Guid("4e131d98-f5d1-4a18-95b7-bb9ec8bd4c7a"), "Pera", "Zdera" },
+                    { new Guid("e590b2a7-fca2-496a-b863-9917ceb21001"), "Mitar", "Miric" }
+                });
+
+            migrationBuilder.InsertData(
+                schema: "dbo",
+                table: "SocialMediaAccounts",
+                columns: new[] { "SocialMediaAccountId", "Type" },
+                values: new object[,]
+                {
+                    { new Guid("2283f630-2ed0-4444-b238-ae3eb59ef51e"), "Telegram" },
+                    { new Guid("5f2fb333-4da7-4742-b0ba-f568116d726e"), "Facebook" },
+                    { new Guid("79df559b-e2f6-4612-ad48-21229ea2eb75"), "Twitter" },
+                    { new Guid("f574a1b6-caa9-43af-a018-a98d9a5c8d00"), "LinkedIn" }
+                });
+
+            migrationBuilder.InsertData(
+                schema: "dbo",
+                table: "PersonSkills",
+                columns: new[] { "PersonSkillId", "Name", "PersonId" },
+                values: new object[,]
+                {
+                    { new Guid("5984f429-93d9-4650-8d5c-7902bcacf866"), "debeo", new Guid("4e131d98-f5d1-4a18-95b7-bb9ec8bd4c7a") },
+                    { new Guid("7e09b932-231b-43e0-bd6c-440b9e750211"), "spor", new Guid("4e131d98-f5d1-4a18-95b7-bb9ec8bd4c7a") },
+                    { new Guid("a17b80a3-05d5-454f-b6d4-04e77d43001d"), "brz", new Guid("e590b2a7-fca2-496a-b863-9917ceb21001") },
+                    { new Guid("c8691848-e94b-46ae-b49a-219343e29a88"), "peva", new Guid("e590b2a7-fca2-496a-b863-9917ceb21001") }
+                });
+
+            migrationBuilder.InsertData(
+                schema: "dbo",
+                table: "PersonSocialMediaAccounts",
+                columns: new[] { "PersonId", "SocialMediaAccountId", "Address" },
+                values: new object[,]
+                {
+                    { new Guid("4e131d98-f5d1-4a18-95b7-bb9ec8bd4c7a"), new Guid("5f2fb333-4da7-4742-b0ba-f568116d726e"), "pera@fb" },
+                    { new Guid("e590b2a7-fca2-496a-b863-9917ceb21001"), new Guid("5f2fb333-4da7-4742-b0ba-f568116d726e"), "mita@fb" },
+                    { new Guid("e590b2a7-fca2-496a-b863-9917ceb21001"), new Guid("79df559b-e2f6-4612-ad48-21229ea2eb75"), "mita@tw" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -96,40 +144,6 @@ namespace PersonManagerService.Persistance.Migrations
                 schema: "dbo",
                 table: "PersonSocialMediaAccounts",
                 column: "SocialMediaAccountId");
-
-
-            migrationBuilder
-               .InsertData(
-                   schema: "dbo",
-                   table: "SocialMediaAccounts",
-                   columns: new[] { "SocialMediaAccountId", "Type" },
-                   values: new object[]
-                   {
-                        "7425e42b-09a2-42c1-9f58-0ede8ff036de",
-                        "Facebook"
-                   });
-
-            migrationBuilder
-                .InsertData(
-                    schema: "dbo",
-                    table: "SocialMediaAccounts",
-                    columns: new[] { "SocialMediaAccountId", "Type" },
-                    values: new object[]
-                    {
-                        "8284d5e8-86f9-453f-a0cd-38d2500734c8",
-                        "LinkedIn"
-                    });
-
-            migrationBuilder
-                .InsertData(
-                    schema: "dbo",
-                    table: "SocialMediaAccounts",
-                    columns: new[] { "SocialMediaAccountId", "Type" },
-                    values: new object[]
-                    {
-                        "ee49d702-4b3d-4892-9889-0e787627cfa1",
-                        "Twitter"
-                    });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

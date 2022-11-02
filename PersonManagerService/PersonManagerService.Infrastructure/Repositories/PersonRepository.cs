@@ -14,10 +14,21 @@ public class PersonRepository : IPersonRepository
 
     public void Create(Person person) => _personManagerServiceDbContext.Set<Person>().Add(person);
 
-    public Task<Person> Get(Guid id, CancellationToken cancellationToken) => 
-        _personManagerServiceDbContext.Set<Person>()
+    public Task<Person> Get(Guid id, CancellationToken cancellationToken)
+    {
+        return _personManagerServiceDbContext.Set<Person>()
                 .Include(p => p.PersonSocialMediaAccounts)
                 .ThenInclude(psma => psma.SocialMediaAccount)
                 .Include(p => p.PersonSkills)
                 .FirstOrDefaultAsync(x => x.PersonId == id, cancellationToken);
+    }
+
+    public async Task<IEnumerable<Person>> Get(CancellationToken cancellationToken)
+    {
+        return await _personManagerServiceDbContext.Set<Person>()
+              .Include(p => p.PersonSocialMediaAccounts)
+              .ThenInclude(psma => psma.SocialMediaAccount)
+              .Include(p => p.PersonSkills)
+              .ToListAsync();
+    }
 }

@@ -6,5 +6,6 @@ namespace PersonManagerService.Application.Abstractions
     {
         void Create(Person person);
         Task<Person> Get(Guid id, CancellationToken cancellationToken);
+        Task<IEnumerable<Person>> Get(CancellationToken cancellationToken);
     }
 }

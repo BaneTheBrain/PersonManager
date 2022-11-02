@@ -18,6 +18,11 @@ public class PersonManagerServiceDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        var personAId = Guid.NewGuid();
+        var personBId = Guid.NewGuid();
+        var fbAccountId = Guid.NewGuid();
+        var twitterAccountId = Guid.NewGuid();
+
         modelBuilder.HasDefaultSchema("dbo");
 
         modelBuilder.Entity<Person>(entity =>
@@ -27,6 +32,11 @@ public class PersonManagerServiceDbContext : DbContext
             entity.Property(e => e.PersonId).ValueGeneratedOnAdd();
             entity.Property(e => e.FirstName).IsRequired();
             entity.Property(e => e.LastName).IsRequired();
+
+            entity.HasData(
+                 new Person { PersonId = personAId, FirstName = "Pera", LastName = "Zdera" },
+                 new Person { PersonId = personBId, FirstName = "Mitar", LastName = "Miric" }
+             );
         });
 
         modelBuilder.Entity<SocialMediaAccount>(entity =>
@@ -35,6 +45,13 @@ public class PersonManagerServiceDbContext : DbContext
             entity.HasKey(e => e.SocialMediaAccountId);
             entity.Property(e => e.SocialMediaAccountId).ValueGeneratedOnAdd();
             entity.Property(e => e.Type).IsRequired();
+            
+            entity.HasData(
+                new SocialMediaAccount { SocialMediaAccountId = fbAccountId, Type = "Facebook" },
+                new SocialMediaAccount { SocialMediaAccountId = twitterAccountId, Type = "Twitter" },
+                new SocialMediaAccount { SocialMediaAccountId = Guid.NewGuid(), Type = "LinkedIn" },
+                new SocialMediaAccount { SocialMediaAccountId = Guid.NewGuid(), Type = "Telegram" }
+                );
         });
 
         modelBuilder.Entity<PersonSkill>(entity =>
@@ -48,7 +65,15 @@ public class PersonManagerServiceDbContext : DbContext
                 .HasOne(ss => ss.Person)
                 .WithMany(p => p.PersonSkills)
                 .HasForeignKey(p => p.PersonId)
-                .IsRequired(false);
+                .IsRequired(false)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.HasData(
+                new PersonSkill { PersonId = personAId, Name = "debeo", PersonSkillId = Guid.NewGuid() },
+                new PersonSkill { PersonId = personAId, Name = "spor", PersonSkillId = Guid.NewGuid() },
+                new PersonSkill { PersonId = personBId, Name = "brz", PersonSkillId = Guid.NewGuid() },
+                new PersonSkill { PersonId = personBId, Name = "peva", PersonSkillId = Guid.NewGuid() }
+            );
         });
 
         modelBuilder.Entity<PersonSocialMediaAccount>(entity =>
@@ -61,13 +86,21 @@ public class PersonManagerServiceDbContext : DbContext
                 .HasOne(psma => psma.Person)
                 .WithMany(p => p.PersonSocialMediaAccounts)
                 .HasForeignKey(psma => psma.PersonId)
-                .IsRequired(false);
+                .IsRequired(false)
+                .OnDelete(DeleteBehavior.Cascade);
 
             entity
                 .HasOne(psma => psma.SocialMediaAccount)
                 .WithMany(sma => sma.PersonSocialMediaAccounts)
                 .HasForeignKey(psma => psma.SocialMediaAccountId)
-                .IsRequired(false);
+                .IsRequired(false)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.HasData(
+                  new PersonSocialMediaAccount { PersonId = personAId, SocialMediaAccountId = fbAccountId, Address = "pera@fb" },
+                  new PersonSocialMediaAccount { PersonId = personBId, SocialMediaAccountId = fbAccountId, Address = "mita@fb" },
+                  new PersonSocialMediaAccount { PersonId = personBId, SocialMediaAccountId = twitterAccountId, Address = "mita@tw" }
+                );
         });
     }
     #endregion

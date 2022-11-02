@@ -12,7 +12,7 @@ using PersonManagerService.Infrastructure.Contexts;
 namespace PersonManagerService.Persistance.Migrations
 {
     [DbContext(typeof(PersonManagerServiceDbContext))]
-    [Migration("20221101101143_Init")]
+    [Migration("20221102092116_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -42,6 +42,20 @@ namespace PersonManagerService.Persistance.Migrations
                     b.HasKey("PersonId");
 
                     b.ToTable("Persons", "dbo");
+
+                    b.HasData(
+                        new
+                        {
+                            PersonId = new Guid("4e131d98-f5d1-4a18-95b7-bb9ec8bd4c7a"),
+                            FirstName = "Pera",
+                            LastName = "Zdera"
+                        },
+                        new
+                        {
+                            PersonId = new Guid("e590b2a7-fca2-496a-b863-9917ceb21001"),
+                            FirstName = "Mitar",
+                            LastName = "Miric"
+                        });
                 });
 
             modelBuilder.Entity("PersonManagerService.Domain.Models.PersonSkill", b =>
@@ -62,6 +76,32 @@ namespace PersonManagerService.Persistance.Migrations
                     b.HasIndex("PersonId");
 
                     b.ToTable("PersonSkills", "dbo");
+
+                    b.HasData(
+                        new
+                        {
+                            PersonSkillId = new Guid("5984f429-93d9-4650-8d5c-7902bcacf866"),
+                            Name = "debeo",
+                            PersonId = new Guid("4e131d98-f5d1-4a18-95b7-bb9ec8bd4c7a")
+                        },
+                        new
+                        {
+                            PersonSkillId = new Guid("7e09b932-231b-43e0-bd6c-440b9e750211"),
+                            Name = "spor",
+                            PersonId = new Guid("4e131d98-f5d1-4a18-95b7-bb9ec8bd4c7a")
+                        },
+                        new
+                        {
+                            PersonSkillId = new Guid("a17b80a3-05d5-454f-b6d4-04e77d43001d"),
+                            Name = "brz",
+                            PersonId = new Guid("e590b2a7-fca2-496a-b863-9917ceb21001")
+                        },
+                        new
+                        {
+                            PersonSkillId = new Guid("c8691848-e94b-46ae-b49a-219343e29a88"),
+                            Name = "peva",
+                            PersonId = new Guid("e590b2a7-fca2-496a-b863-9917ceb21001")
+                        });
                 });
 
             modelBuilder.Entity("PersonManagerService.Domain.Models.PersonSocialMediaAccount", b =>
@@ -81,6 +121,26 @@ namespace PersonManagerService.Persistance.Migrations
                     b.HasIndex("SocialMediaAccountId");
 
                     b.ToTable("PersonSocialMediaAccounts", "dbo");
+
+                    b.HasData(
+                        new
+                        {
+                            PersonId = new Guid("4e131d98-f5d1-4a18-95b7-bb9ec8bd4c7a"),
+                            SocialMediaAccountId = new Guid("5f2fb333-4da7-4742-b0ba-f568116d726e"),
+                            Address = "pera@fb"
+                        },
+                        new
+                        {
+                            PersonId = new Guid("e590b2a7-fca2-496a-b863-9917ceb21001"),
+                            SocialMediaAccountId = new Guid("5f2fb333-4da7-4742-b0ba-f568116d726e"),
+                            Address = "mita@fb"
+                        },
+                        new
+                        {
+                            PersonId = new Guid("e590b2a7-fca2-496a-b863-9917ceb21001"),
+                            SocialMediaAccountId = new Guid("79df559b-e2f6-4612-ad48-21229ea2eb75"),
+                            Address = "mita@tw"
+                        });
                 });
 
             modelBuilder.Entity("PersonManagerService.Domain.Models.SocialMediaAccount", b =>
@@ -96,13 +156,36 @@ namespace PersonManagerService.Persistance.Migrations
                     b.HasKey("SocialMediaAccountId");
 
                     b.ToTable("SocialMediaAccounts", "dbo");
+
+                    b.HasData(
+                        new
+                        {
+                            SocialMediaAccountId = new Guid("5f2fb333-4da7-4742-b0ba-f568116d726e"),
+                            Type = "Facebook"
+                        },
+                        new
+                        {
+                            SocialMediaAccountId = new Guid("79df559b-e2f6-4612-ad48-21229ea2eb75"),
+                            Type = "Twitter"
+                        },
+                        new
+                        {
+                            SocialMediaAccountId = new Guid("f574a1b6-caa9-43af-a018-a98d9a5c8d00"),
+                            Type = "LinkedIn"
+                        },
+                        new
+                        {
+                            SocialMediaAccountId = new Guid("2283f630-2ed0-4444-b238-ae3eb59ef51e"),
+                            Type = "Telegram"
+                        });
                 });
 
             modelBuilder.Entity("PersonManagerService.Domain.Models.PersonSkill", b =>
                 {
                     b.HasOne("PersonManagerService.Domain.Models.Person", "Person")
                         .WithMany("PersonSkills")
-                        .HasForeignKey("PersonId");
+                        .HasForeignKey("PersonId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Person");
                 });
@@ -111,11 +194,13 @@ namespace PersonManagerService.Persistance.Migrations
                 {
                     b.HasOne("PersonManagerService.Domain.Models.Person", "Person")
                         .WithMany("PersonSocialMediaAccounts")
-                        .HasForeignKey("PersonId");
+                        .HasForeignKey("PersonId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("PersonManagerService.Domain.Models.SocialMediaAccount", "SocialMediaAccount")
                         .WithMany("PersonSocialMediaAccounts")
-                        .HasForeignKey("SocialMediaAccountId");
+                        .HasForeignKey("SocialMediaAccountId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Person");
 

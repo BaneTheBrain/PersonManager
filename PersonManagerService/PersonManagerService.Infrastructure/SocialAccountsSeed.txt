@@ -1,37 +1,45 @@
-﻿migrationBuilder
-               .InsertData(
-                   schema: "dbo",
-                   table: "SocialMediaAccounts",
-                   columns: new[] { "SocialMediaAccountId", "Type" },
-                   values: new object[]
-                   {
-                        "7425e42b-09a2-42c1-9f58-0ede8ff036de",
-                        "Facebook"
-                   });
+﻿using Microsoft.EntityFrameworkCore.Migrations;
+
+#nullable disable
+
+namespace PersonManagerService.Persistance.Migrations
+{
+    public partial class Seed : Migration
+    {
+        protected override void Up(MigrationBuilder migrationBuilder)
+        {
+            //migrationBuilder.Sql("...", true);
 
             migrationBuilder
                 .InsertData(
                     schema: "dbo",
                     table: "SocialMediaAccounts",
                     columns: new[] { "SocialMediaAccountId", "Type" },
-                    values: new object[]
+                    values: new object[,]
                     {
-                        "8284d5e8-86f9-453f-a0cd-38d2500734c8",
-                        "LinkedIn"
-                    });
-
-            migrationBuilder
-                .InsertData(
-                    schema: "dbo",
-                    table: "SocialMediaAccounts",
-                    columns: new[] { "SocialMediaAccountId", "Type" },
-                    values: new object[]
-                    {
+                        {
                         "ee49d702-4b3d-4892-9889-0e787627cfa1",
                         "Twitter"
+                        },
+                        {
+                         "8284d5e8-86f9-453f-a0cd-38d2500734c8",
+                        "LinkedIn"
+                        },
+                        {
+                        "7425e42b-09a2-42c1-9f58-0ede8ff036de",
+                        "Facebook"
+                        }
                     });
+        }
 
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
+            //migrationBuilder.DeleteData(table: "SocialMediaAccounts", keyColumn: "SocialMediaAccountId", keyValue: "ee49d702-4b3d-4892-9889-0e787627cfa1");
+            //migrationBuilder.DeleteData(table: "SocialMediaAccounts", keyColumn: "SocialMediaAccountId", keyValue: "8284d5e8-86f9-453f-a0cd-38d2500734c8");
+            //migrationBuilder.DeleteData(table: "SocialMediaAccounts", keyColumn: "SocialMediaAccountId", keyValue: "7425e42b-09a2-42c1-9f58-0ede8ff036de");
 
-delete from PersonSkills;
-delete from PersonSocialMediaAccounts;
-delete from Persons;
+            migrationBuilder.Sql("DELETE FROM SocialMediaAccounts", true);
+
+        }
+    }
+}
