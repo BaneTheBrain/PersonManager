@@ -3,5 +3,5 @@ using PersonManagerService.Application.DTOs;
 
 namespace PersonManagerService.Application.Queries.GetPersons;
 
-public sealed record GetPersonsQuery() : IQuery<IEnumerable<PersonDto>>;
+public sealed record GetPersonsQuery() : IQuery<IEnumerable<PersonResponse>>;
 

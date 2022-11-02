@@ -25,7 +25,7 @@ public class PersonsController : ControllerBase
     [ProducesResponseType(typeof(Guid), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<ActionResult<Guid>> CreatePerson(PersonDto personDto, CancellationToken cancellationToken = default)
+    public async Task<ActionResult<Guid>> CreatePerson(PersonRequest personDto, CancellationToken cancellationToken = default)
     {
         try
         {
@@ -45,10 +45,10 @@ public class PersonsController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    [ProducesResponseType(typeof(PersonDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(PersonResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<ActionResult<PersonDto>> GetPerson(Guid id, CancellationToken cancellationToken = default)
+    public async Task<ActionResult<PersonResponse>> GetPerson(Guid id, CancellationToken cancellationToken = default)
     {
         try
         {
@@ -75,10 +75,10 @@ public class PersonsController : ControllerBase
     }
 
     [HttpGet]
-    [ProducesResponseType(typeof(IEnumerable<PersonDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(IEnumerable<PersonResponse>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<ActionResult<IEnumerable<PersonDto>>> GetPersons(CancellationToken cancellationToken = default)
+    public async Task<ActionResult<IEnumerable<PersonResponse>>> GetPersons(CancellationToken cancellationToken = default)
     {
         try
         {

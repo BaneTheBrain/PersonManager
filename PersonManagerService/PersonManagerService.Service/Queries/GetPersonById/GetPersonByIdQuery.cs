@@ -4,5 +4,5 @@ using PersonManagerService.Domain.Models;
 
 namespace PersonManagerService.Application.Queries.GetPerson;
 
-public sealed record GetPersonByIdQuery(Guid PersonId) : IQuery<PersonDto>;
+public sealed record GetPersonByIdQuery(Guid PersonId) : IQuery<PersonResponse>;
 

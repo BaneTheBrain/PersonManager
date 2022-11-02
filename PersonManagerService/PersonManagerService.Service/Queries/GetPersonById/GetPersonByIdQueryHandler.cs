@@ -8,7 +8,7 @@ using PersonManagerService.Domain.Models;
 
 namespace PersonManagerService.Application.Queries.GetPerson;
 
-public class GetPersonByIdQueryHandler : IRequestHandler<GetPersonByIdQuery, PersonDto>
+public class GetPersonByIdQueryHandler : IRequestHandler<GetPersonByIdQuery, PersonResponse>
 {
     private readonly IPersonRepository _personRepository;
     private readonly ILogger<CreatePersonCommandHandler> _logger;
@@ -21,14 +21,14 @@ public class GetPersonByIdQueryHandler : IRequestHandler<GetPersonByIdQuery, Per
         _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
     }
 
-    public async Task<PersonDto> Handle(GetPersonByIdQuery request, CancellationToken cancellationToken)
+    public async Task<PersonResponse> Handle(GetPersonByIdQuery request, CancellationToken cancellationToken)
     {
         try
         {
             _logger.LogInformation($"[{nameof(GetPersonByIdQueryHandler)}] Getting a person from the repository initiated.");
 
             var dbPerson = await _personRepository.Get(request.PersonId, cancellationToken);
-            var person = _mapper.Map<Person, PersonDto>(dbPerson);
+            var person = _mapper.Map<Person, PersonResponse>(dbPerson);
 
             _logger.LogInformation($"[{nameof(GetPersonByIdQueryHandler)}] Getting a person from the repository suceeded.");
             return person;

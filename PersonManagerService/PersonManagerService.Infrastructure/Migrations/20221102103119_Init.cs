@@ -94,8 +94,8 @@ namespace PersonManagerService.Persistance.Migrations
                 columns: new[] { "PersonId", "FirstName", "LastName" },
                 values: new object[,]
                 {
-                    { new Guid("4e131d98-f5d1-4a18-95b7-bb9ec8bd4c7a"), "Pera", "Zdera" },
-                    { new Guid("e590b2a7-fca2-496a-b863-9917ceb21001"), "Mitar", "Miric" }
+                    { new Guid("4c0ff862-187e-4b7c-8e06-44f08e613d8f"), "Mitar", "Miric" },
+                    { new Guid("a5d45942-98b8-42e9-9e13-1718fb954fd1"), "Pera", "Zdera" }
                 });
 
             migrationBuilder.InsertData(
@@ -104,10 +104,10 @@ namespace PersonManagerService.Persistance.Migrations
                 columns: new[] { "SocialMediaAccountId", "Type" },
                 values: new object[,]
                 {
-                    { new Guid("2283f630-2ed0-4444-b238-ae3eb59ef51e"), "Telegram" },
-                    { new Guid("5f2fb333-4da7-4742-b0ba-f568116d726e"), "Facebook" },
-                    { new Guid("79df559b-e2f6-4612-ad48-21229ea2eb75"), "Twitter" },
-                    { new Guid("f574a1b6-caa9-43af-a018-a98d9a5c8d00"), "LinkedIn" }
+                    { new Guid("67a2aaf3-329a-46e0-87b1-0acb746d4c8b"), "Telegram" },
+                    { new Guid("86d3674f-6778-4cc6-a593-55e7f5c4dd8b"), "Twitter" },
+                    { new Guid("acd7419f-73eb-48ef-b042-05de4bb7dc8c"), "Facebook" },
+                    { new Guid("c7a9581b-f0e0-4c3a-b90f-1ccf49dd360f"), "LinkedIn" }
                 });
 
             migrationBuilder.InsertData(
@@ -116,10 +116,10 @@ namespace PersonManagerService.Persistance.Migrations
                 columns: new[] { "PersonSkillId", "Name", "PersonId" },
                 values: new object[,]
                 {
-                    { new Guid("5984f429-93d9-4650-8d5c-7902bcacf866"), "debeo", new Guid("4e131d98-f5d1-4a18-95b7-bb9ec8bd4c7a") },
-                    { new Guid("7e09b932-231b-43e0-bd6c-440b9e750211"), "spor", new Guid("4e131d98-f5d1-4a18-95b7-bb9ec8bd4c7a") },
-                    { new Guid("a17b80a3-05d5-454f-b6d4-04e77d43001d"), "brz", new Guid("e590b2a7-fca2-496a-b863-9917ceb21001") },
-                    { new Guid("c8691848-e94b-46ae-b49a-219343e29a88"), "peva", new Guid("e590b2a7-fca2-496a-b863-9917ceb21001") }
+                    { new Guid("230b0b87-7447-4287-a91b-5f821b001b23"), "spor", new Guid("a5d45942-98b8-42e9-9e13-1718fb954fd1") },
+                    { new Guid("3d709ff0-f616-4b6c-b62b-c8cff4fcecab"), "peva", new Guid("4c0ff862-187e-4b7c-8e06-44f08e613d8f") },
+                    { new Guid("93087685-580c-4780-bd05-42087851ea93"), "debeo", new Guid("a5d45942-98b8-42e9-9e13-1718fb954fd1") },
+                    { new Guid("e92139de-1ddd-4c12-8972-4ed61c98a507"), "brz", new Guid("4c0ff862-187e-4b7c-8e06-44f08e613d8f") }
                 });
 
             migrationBuilder.InsertData(
@@ -128,9 +128,9 @@ namespace PersonManagerService.Persistance.Migrations
                 columns: new[] { "PersonId", "SocialMediaAccountId", "Address" },
                 values: new object[,]
                 {
-                    { new Guid("4e131d98-f5d1-4a18-95b7-bb9ec8bd4c7a"), new Guid("5f2fb333-4da7-4742-b0ba-f568116d726e"), "pera@fb" },
-                    { new Guid("e590b2a7-fca2-496a-b863-9917ceb21001"), new Guid("5f2fb333-4da7-4742-b0ba-f568116d726e"), "mita@fb" },
-                    { new Guid("e590b2a7-fca2-496a-b863-9917ceb21001"), new Guid("79df559b-e2f6-4612-ad48-21229ea2eb75"), "mita@tw" }
+                    { new Guid("4c0ff862-187e-4b7c-8e06-44f08e613d8f"), new Guid("86d3674f-6778-4cc6-a593-55e7f5c4dd8b"), "mita@tw" },
+                    { new Guid("4c0ff862-187e-4b7c-8e06-44f08e613d8f"), new Guid("acd7419f-73eb-48ef-b042-05de4bb7dc8c"), "mita@fb" },
+                    { new Guid("a5d45942-98b8-42e9-9e13-1718fb954fd1"), new Guid("acd7419f-73eb-48ef-b042-05de4bb7dc8c"), "pera@fb" }
                 });
 
             migrationBuilder.CreateIndex(
