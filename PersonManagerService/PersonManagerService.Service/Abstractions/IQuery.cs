@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace PersonManagerService.Application.Abstractions;
+namespace PersonManagerService.Domain.Abstractions;
 
 public interface IQuery<out TResult> : IRequest<TResult>
 {

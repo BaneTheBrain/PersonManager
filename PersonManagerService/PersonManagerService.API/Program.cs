@@ -1,6 +1,6 @@
 using PersonManagerService.Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
-using PersonManagerService.Application;
+using PersonManagerService.Domain;
 using PersonManagerService.API.Extensions.Midleware;
 
 var builder = WebApplication.CreateBuilder(args);

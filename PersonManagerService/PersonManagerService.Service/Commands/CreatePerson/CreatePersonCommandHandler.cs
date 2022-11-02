@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using PersonManagerService.Application.Abstractions;
-using PersonManagerService.Application.DTOs;
+using PersonManagerService.Domain.Abstractions;
+using PersonManagerService.Domain.DTOs;
 using PersonManagerService.Domain.Models;
 
-namespace PersonManagerService.Application.Commands.CreatePerson;
+namespace PersonManagerService.Domain.Commands.CreatePerson;
 
 public class CreatePersonCommandHandler : IRequestHandler<CreatePersonCommand, Guid>
 {

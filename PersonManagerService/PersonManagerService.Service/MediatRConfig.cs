@@ -2,7 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
-namespace PersonManagerService.Application;
+namespace PersonManagerService.Domain;
 
 public static class MediatRConfig
 {

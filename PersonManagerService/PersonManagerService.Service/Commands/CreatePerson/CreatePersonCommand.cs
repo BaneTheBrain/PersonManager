@@ -1,7 +1,7 @@
-﻿using PersonManagerService.Application.Abstractions;
-using PersonManagerService.Application.DTOs;
+﻿using PersonManagerService.Domain.Abstractions;
+using PersonManagerService.Domain.DTOs;
 
-namespace PersonManagerService.Application.Commands.CreatePerson;
+namespace PersonManagerService.Domain.Commands.CreatePerson;
 
 public sealed record CreatePersonCommand(
     string FirstName,

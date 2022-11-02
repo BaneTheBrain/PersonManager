@@ -1,7 +1,7 @@
-﻿using PersonManagerService.Application.Abstractions;
-using PersonManagerService.Application.DTOs;
+﻿using PersonManagerService.Domain.Abstractions;
+using PersonManagerService.Domain.DTOs;
 
-namespace PersonManagerService.Application.Queries.GetPersons;
+namespace PersonManagerService.Domain.Queries.GetPersons;
 
 public sealed record GetPersonsQuery() : IQuery<IEnumerable<PersonResponse>>;
 

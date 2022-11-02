@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using PersonManagerService.Application.Abstractions;
+using PersonManagerService.Domain.Abstractions;
 using PersonManagerService.Domain.Models;
 using PersonManagerService.Infrastructure.Contexts;
 using System;

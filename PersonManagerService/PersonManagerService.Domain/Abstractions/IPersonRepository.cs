@@ -1,0 +1,10 @@
+﻿using PersonManagerService.Domain.Models;
+
+namespace PersonManagerService.Domain.Abstractions;
+
+public interface IPersonRepository
+{
+    void Create(Person person);
+    Task<Person> Get(Guid id, CancellationToken cancellationToken);
+    Task<IEnumerable<Person>> Get(CancellationToken cancellationToken);
+}

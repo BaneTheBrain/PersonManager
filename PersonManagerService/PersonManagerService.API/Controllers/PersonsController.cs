@@ -1,9 +1,9 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using PersonManagerService.Application.Commands.CreatePerson;
-using PersonManagerService.Application.DTOs;
-using PersonManagerService.Application.Queries.GetPerson;
-using PersonManagerService.Application.Queries.GetPersons;
+using PersonManagerService.Domain.Commands.CreatePerson;
+using PersonManagerService.Domain.DTOs;
+using PersonManagerService.Domain.Queries.GetPerson;
+using PersonManagerService.Domain.Queries.GetPersons;
 
 namespace PersonManagerService.API.Controllers;
 

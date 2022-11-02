@@ -1,4 +1,4 @@
-﻿namespace PersonManagerService.Application.Abstractions;
+﻿namespace PersonManagerService.Domain.Abstractions;
 
 public interface IUnitOfWork
 {

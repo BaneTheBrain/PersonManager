@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using PersonManagerService.Application.Abstractions;
-using PersonManagerService.Application.Commands.CreatePerson;
-using PersonManagerService.Application.DTOs;
+using PersonManagerService.Domain.Abstractions;
+using PersonManagerService.Domain.Commands.CreatePerson;
+using PersonManagerService.Domain.DTOs;
 using PersonManagerService.Domain.Models;
 
-namespace PersonManagerService.Application.Queries.GetPerson;
+namespace PersonManagerService.Domain.Queries.GetPerson;
 
 public class GetPersonByIdQueryHandler : IRequestHandler<GetPersonByIdQuery, PersonResponse>
 {

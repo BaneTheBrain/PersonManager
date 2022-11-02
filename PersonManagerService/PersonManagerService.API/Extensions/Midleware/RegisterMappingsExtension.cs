@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using PersonManagerService.Application.Mapping;
+using PersonManagerService.Domain.Mapping;
 
 namespace PersonManagerService.API.Extensions.Midleware;
 

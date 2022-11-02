@@ -1,4 +1,4 @@
-﻿using PersonManagerService.Application.Abstractions;
+﻿using PersonManagerService.Domain.Abstractions;
 using PersonManagerService.Infrastructure.Contexts;
 
 namespace PersonManagerService.Persistance.Repositories;

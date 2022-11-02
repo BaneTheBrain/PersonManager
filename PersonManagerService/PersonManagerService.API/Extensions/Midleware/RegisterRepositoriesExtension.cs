@@ -1,4 +1,4 @@
-﻿using PersonManagerService.Application.Abstractions;
+﻿using PersonManagerService.Domain.Abstractions;
 using PersonManagerService.Persistance.Repositories;
 
 namespace PersonManagerService.API.Extensions.Midleware;

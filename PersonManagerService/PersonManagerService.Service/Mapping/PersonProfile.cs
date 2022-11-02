@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
-using PersonManagerService.Application.Commands.CreatePerson;
-using PersonManagerService.Application.DTOs;
+using PersonManagerService.Domain.Commands.CreatePerson;
+using PersonManagerService.Domain.DTOs;
 using PersonManagerService.Domain.Models;
 using System.Net.Http.Headers;
 using System.Text.RegularExpressions;
 
-namespace PersonManagerService.Application.Mapping;
+namespace PersonManagerService.Domain.Mapping;
 
 public class PersonProfile : Profile
 {
