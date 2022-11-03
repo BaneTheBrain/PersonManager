@@ -3,14 +3,36 @@ using PersonManagerService.Infrastructure.Contexts;
 
 namespace PersonManagerService.Persistance.Repositories;
 
-public class UnitOfWork : IUnitOfWork
+public sealed class UnitOfWork : IUnitOfWork, IDisposable
 {
-    private readonly PersonManagerServiceDbContext _personManagerServiceDbContext;
+    private bool _disposed;
+    private readonly PersonManagerServiceDbContext _dbContext;
+    private IPersonRepository _personRepository;
 
-    public UnitOfWork(PersonManagerServiceDbContext personManagerServiceDbContext) => _personManagerServiceDbContext = personManagerServiceDbContext ?? throw new ArgumentNullException(nameof(personManagerServiceDbContext));
+    public UnitOfWork(PersonManagerServiceDbContext dbContext)
+    {
+        _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
+    }
+
+    public IPersonRepository PersonRepository => _personRepository ?? (_personRepository = new PersonRepository(_dbContext));
 
     public Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
-        return _personManagerServiceDbContext.SaveChangesAsync(cancellationToken);
+        return _dbContext.SaveChangesAsync(cancellationToken);
+    }
+
+    public void Dispose()
+    {
+        Dispose(true);
+        GC.SuppressFinalize(this);
+    }
+
+    private void Dispose(bool disposing)
+    {
+        if (!_disposed && disposing)
+        {
+            _dbContext.Dispose();
+        }
+        _disposed = true;
     }
 }

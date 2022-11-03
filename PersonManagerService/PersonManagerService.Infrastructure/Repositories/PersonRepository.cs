@@ -6,26 +6,28 @@ using System;
 
 namespace PersonManagerService.Persistance.Repositories;
 
-public class PersonRepository : IPersonRepository
+public class PersonRepository : BaseRepository<Person>, IPersonRepository
 {
-    private readonly PersonManagerServiceDbContext _personManagerServiceDbContext;
+    public PersonRepository(PersonManagerServiceDbContext dbContext) : base(dbContext) { }
 
-    public PersonRepository(PersonManagerServiceDbContext personManagerServiceDbContext) => _personManagerServiceDbContext = personManagerServiceDbContext ?? throw new ArgumentNullException(nameof(personManagerServiceDbContext));
-
-    public void Create(Person person) => _personManagerServiceDbContext.Set<Person>().Add(person);
-
-    public Task<Person> Get(Guid id, CancellationToken cancellationToken)
+    public void Create(Person person)
     {
-        return _personManagerServiceDbContext.Set<Person>()
+        //perform some validation, etc..
+        base.Insert(person);
+    }
+
+    public Task<Person> GetPersonWithSocialMediaAccountsAndSkills(Guid id, CancellationToken cancellationToken)
+    {
+        return _dbSet
                 .Include(p => p.PersonSocialMediaAccounts)
                 .ThenInclude(psma => psma.SocialMediaAccount)
                 .Include(p => p.PersonSkills)
                 .FirstOrDefaultAsync(x => x.PersonId == id, cancellationToken);
     }
 
-    public async Task<IEnumerable<Person>> Get(CancellationToken cancellationToken)
+    public async Task<IEnumerable<Person>> GetPersonWithSocialMediaAccountsAndSkills(CancellationToken cancellationToken)
     {
-        return await _personManagerServiceDbContext.Set<Person>()
+        return await _dbSet
               .Include(p => p.PersonSocialMediaAccounts)
               .ThenInclude(psma => psma.SocialMediaAccount)
               .Include(p => p.PersonSkills)

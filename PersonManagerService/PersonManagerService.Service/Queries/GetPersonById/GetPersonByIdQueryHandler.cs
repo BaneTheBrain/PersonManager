@@ -10,13 +10,13 @@ namespace PersonManagerService.Domain.Queries.GetPerson;
 
 public class GetPersonByIdQueryHandler : IRequestHandler<GetPersonByIdQuery, PersonResponse>
 {
-    private readonly IPersonRepository _personRepository;
+    private readonly IUnitOfWork _uow;
     private readonly ILogger<CreatePersonCommandHandler> _logger;
     private readonly IMapper _mapper;
 
-    public GetPersonByIdQueryHandler(IPersonRepository personRepository, ILogger<CreatePersonCommandHandler> logger, IMapper mapper)
+    public GetPersonByIdQueryHandler(IUnitOfWork uow, ILogger<CreatePersonCommandHandler> logger, IMapper mapper)
     {
-        _personRepository = personRepository ?? throw new ArgumentNullException(nameof(personRepository));
+        _uow = uow ?? throw new ArgumentNullException(nameof(uow));
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
     }
@@ -27,7 +27,7 @@ public class GetPersonByIdQueryHandler : IRequestHandler<GetPersonByIdQuery, Per
         {
             _logger.LogInformation($"[{nameof(GetPersonByIdQueryHandler)}] Getting a person from the repository initiated.");
 
-            var dbPerson = await _personRepository.Get(request.PersonId, cancellationToken);
+            var dbPerson = await _uow.PersonRepository.GetPersonWithSocialMediaAccountsAndSkills(request.PersonId, cancellationToken);
             var person = _mapper.Map<Person, PersonResponse>(dbPerson);
 
             _logger.LogInformation($"[{nameof(GetPersonByIdQueryHandler)}] Getting a person from the repository suceeded.");
