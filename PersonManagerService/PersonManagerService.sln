@@ -11,7 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{CC55127B-2
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PersonManagerService.Domain", "PersonManagerService.Domain\PersonManagerService.Domain.csproj", "{BFB0955C-9B47-40C7-A6C4-CC31E88050D3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PersonManagerService.Persistance", "PersonManagerService.Infrastructure\PersonManagerService.Persistance.csproj", "{DDF7A52D-2ADB-47D6-94A5-993D9D1DF10A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PersonManagerService.Infrastructure", "PersonManagerService.Infrastructure\PersonManagerService.Infrastructure.csproj", "{DDF7A52D-2ADB-47D6-94A5-993D9D1DF10A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PersonManagerService.Application", "PersonManagerService.Service\PersonManagerService.Application.csproj", "{4B26C830-F4BC-4225-AF35-1989EB862607}"
 EndProject
