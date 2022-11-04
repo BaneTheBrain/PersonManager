@@ -8,7 +8,15 @@ public static class RegisterDatabasesExtension
 {
     public static void RegisterDatabases(this IServiceCollection serviceCollection, ConfigurationManager configuration)
     {
-        serviceCollection.AddDbContext<PersonManagerServiceDbContext>(options =>
-        options.UseSqlServer(new SqlConnection(configuration.GetSection("DatabaseOptions:ConnectionString").Value)));
+        var dbConnectionString = configuration.GetSection("DatabaseOptions:ConnectionString").Value;
+        if (dbConnectionString is not null)
+        {
+            serviceCollection.AddDbContext<PersonManagerServiceDbContext>(options => options.UseSqlServer(dbConnectionString));
+        }
+        else
+        {
+            serviceCollection.AddDbContext<PersonManagerServiceDbContext>(c => c.UseInMemoryDatabase("PersonDbInMemory"));
+            //to do: seed in memory db
+        }
     }
 }

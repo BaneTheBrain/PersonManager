@@ -29,16 +29,18 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 //add authentication
 app.UseAuthorization();
-
 app.UseMiddleware<GlobalExceptionHandlerMiddleware>();
 app.MapControllers();
 
 using (var scope = app.Services.CreateScope())
 {
-    scope.ServiceProvider.GetRequiredService<PersonManagerServiceDbContext>().Database.Migrate();
+    var database = scope.ServiceProvider.GetRequiredService<PersonManagerServiceDbContext>().Database;
+    if (database.IsRelational())
+    {
+        database.Migrate();
+    }
 }
 
 app.Run();
