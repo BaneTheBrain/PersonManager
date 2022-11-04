@@ -1,22 +1,23 @@
 using PersonManagerService.Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
 using PersonManagerService.Domain;
-using PersonManagerService.API.Extensions.Midleware;
+using PersonManagerService.API.Extensions.ServiceRegistrations;
+using PersonManagerService.API.Extensions.Middleware;
+using System.Reflection;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
+builder.Services.RegisterSwagger();
 builder.Services.RegisterDatabases(builder.Configuration);
 builder.Services.RegisterRepositories();
+builder.Services.RegisterMiddlewares();
 builder.Services.RegisterApplicationMediatR();
 builder.Services.RegisterMappers();
-
+builder.RegisterLoggers();
 
 var app = builder.Build();
 
@@ -32,6 +33,7 @@ app.UseHttpsRedirection();
 //add authentication
 app.UseAuthorization();
 
+app.UseMiddleware<GlobalExceptionHandlerMiddleware>();
 app.MapControllers();
 
 using (var scope = app.Services.CreateScope())

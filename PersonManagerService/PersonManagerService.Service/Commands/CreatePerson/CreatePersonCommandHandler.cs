@@ -14,7 +14,6 @@ public class CreatePersonCommandHandler : IRequestHandler<CreatePersonCommand, G
     private readonly IUnitOfWork _unitOfWork;
     private readonly ILogger<CreatePersonCommandHandler> _logger;
 
-
     public CreatePersonCommandHandler(IUnitOfWork uow, IMapper mapper, IUnitOfWork unitOfWork, ILogger<CreatePersonCommandHandler> logger)
     {
         _uow = uow ?? throw new ArgumentNullException(nameof(uow));
@@ -27,18 +26,18 @@ public class CreatePersonCommandHandler : IRequestHandler<CreatePersonCommand, G
     {
         try
         {
-            _logger.LogInformation($"[{nameof(CreatePersonCommandHandler)}] Adding a new person to the repository initiated.");
+            _logger.LogInformation($"{nameof(CreatePersonCommandHandler)} -> Handle request initiated.");
 
             var person = _mapper.Map<CreatePersonCommand, Person>(request);
             _uow.PersonRepository.Create(person);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-            _logger.LogInformation($"[{nameof(CreatePersonCommandHandler)}] Adding a new person to the repository suceeded.");
+            _logger.LogInformation($"{nameof(CreatePersonCommandHandler)} -> Handle request suceeded.");
             return person.PersonId;
         }
-        catch (Exception)
+        catch
         {
-            _logger.LogError($"[{nameof(CreatePersonCommandHandler)}] Adding a new person to the repository failed.");
+            _logger.LogError($"{nameof(CreatePersonCommandHandler)} -> Handle request failed.");
             throw;
         }
     }

@@ -1,9 +1,8 @@
 ﻿using AutoMapper;
+using PersonManagerService.Application.Helpers;
 using PersonManagerService.Domain.Commands.CreatePerson;
 using PersonManagerService.Domain.DTOs;
 using PersonManagerService.Domain.Models;
-using System.Net.Http.Headers;
-using System.Text.RegularExpressions;
 
 namespace PersonManagerService.Domain.Mapping;
 
@@ -22,39 +21,44 @@ public class PersonProfile : Profile
             .ForCtorParam(nameof(PersonResponse.Vovels), o => o.MapFrom(person => MapVovels(person)))
             .ForCtorParam(nameof(PersonResponse.Constenants), o => o.MapFrom(person => MapConstenants(person)))
             .ForCtorParam(nameof(PersonResponse.FullName), o => o.MapFrom(person => GetFullName(person)))
-            .ForCtorParam(nameof(PersonResponse.ReverseName), o => o.MapFrom(person => new string(GetFullName(person).Reverse().ToArray())));
+            .ForCtorParam(nameof(PersonResponse.ReverseName), o => o.MapFrom(person => MapReversedName(person)));
     }
+
+    #region Private Methods
 
     private string GetFullName(Person person)
     {
-        return string.Format("{0} {1}", person.FirstName, person.LastName).Trim();
+        return $"{person.FirstName} {person.LastName}".Trim();
     }
 
     private int MapVovels(Person person)
     {
-        string vowelsPattern = @"[aeiou]";
-        return Regex.Matches(GetFullName(person), vowelsPattern, RegexOptions.IgnoreCase).Count;
+        return GetFullName(person).GetVovelsNumber();
     }
     private int MapConstenants(Person person)
     {
-        string consonantsPattern = @"[a-z-[aeiou]]";
-        return Regex.Matches(GetFullName(person), consonantsPattern, RegexOptions.IgnoreCase).Count;
+        return GetFullName(person).GetConstenantsNumber();
+    }
+
+    private string MapReversedName(Person person)
+    {
+        return GetFullName(person).GetReversed();
     }
 
     private IEnumerable<PersonSocialMediaAccountResponse> MapSocialMediaAccounts(Person person)
     {
-        return person.PersonSocialMediaAccounts.Select(psma => 
+        return person.PersonSocialMediaAccounts.Select(psma =>
             new PersonSocialMediaAccountResponse(psma.Address, psma.SocialMediaAccount.Type));
     }
 
     private IEnumerable<PersonSkill> MapSocialSkills(CreatePersonCommand createPersonCommand)
     {
-        if(createPersonCommand.Skills is null)
+        if (createPersonCommand.Skills is null)
         {
             return Enumerable.Empty<PersonSkill>();
         }
 
-        return createPersonCommand.Skills.Select(socialSkill => 
+        return createPersonCommand.Skills.Select(socialSkill =>
             new PersonSkill
             {
                 Name = socialSkill,
@@ -75,5 +79,7 @@ public class PersonProfile : Profile
                 SocialMediaAccountId = socialMediaAccount.AccountId,
                 SocialMediaAccount = socialMediaAccount.AccountId == Guid.Empty ? new SocialMediaAccount { Type = socialMediaAccount.Type } : null
             });
-    }
+    } 
+
+    #endregion
 }

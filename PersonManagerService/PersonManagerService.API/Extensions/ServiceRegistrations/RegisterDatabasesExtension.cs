@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using PersonManagerService.Infrastructure.Contexts;
 
-namespace PersonManagerService.API.Extensions.Midleware;
+namespace PersonManagerService.API.Extensions.ServiceRegistrations;
 
 public static class RegisterDatabasesExtension
 {

@@ -11,10 +11,10 @@ namespace PersonManagerService.Domain.Queries.GetPerson;
 public class GetPersonByIdQueryHandler : IRequestHandler<GetPersonByIdQuery, PersonResponse>
 {
     private readonly IUnitOfWork _uow;
-    private readonly ILogger<CreatePersonCommandHandler> _logger;
+    private readonly ILogger<GetPersonByIdQueryHandler> _logger;
     private readonly IMapper _mapper;
 
-    public GetPersonByIdQueryHandler(IUnitOfWork uow, ILogger<CreatePersonCommandHandler> logger, IMapper mapper)
+    public GetPersonByIdQueryHandler(IUnitOfWork uow, ILogger<GetPersonByIdQueryHandler> logger, IMapper mapper)
     {
         _uow = uow ?? throw new ArgumentNullException(nameof(uow));
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
@@ -25,17 +25,17 @@ public class GetPersonByIdQueryHandler : IRequestHandler<GetPersonByIdQuery, Per
     {
         try
         {
-            _logger.LogInformation($"[{nameof(GetPersonByIdQueryHandler)}] Getting a person from the repository initiated.");
+            _logger.LogInformation($"{nameof(GetPersonByIdQueryHandler)} -> Handle request initiated.");
 
             var dbPerson = await _uow.PersonRepository.GetPersonWithSocialMediaAccountsAndSkills(request.PersonId, cancellationToken);
             var person = _mapper.Map<Person, PersonResponse>(dbPerson);
 
-            _logger.LogInformation($"[{nameof(GetPersonByIdQueryHandler)}] Getting a person from the repository suceeded.");
+            _logger.LogInformation($"{nameof(GetPersonByIdQueryHandler)} -> Handle request suceeded.");
             return person;
         }
-        catch (Exception)
+        catch
         {
-            _logger.LogError($"[{nameof(GetPersonByIdQueryHandler)}]Getting a person from the repository failed.");
+            _logger.LogError($"{nameof(GetPersonByIdQueryHandler)} -> Handle request failed.");
             throw;
         }
     }

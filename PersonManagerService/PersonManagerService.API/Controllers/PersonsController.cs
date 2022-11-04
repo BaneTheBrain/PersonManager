@@ -7,6 +7,9 @@ using PersonManagerService.Domain.Queries.GetPersons;
 
 namespace PersonManagerService.API.Controllers;
 
+/// <summary>
+/// Handles Person data
+/// </summary>
 [Route("api/[controller]")]
 [ApiController]
 public class PersonsController : ControllerBase
@@ -20,6 +23,12 @@ public class PersonsController : ControllerBase
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }
 
+    /// <summary>
+    /// Adds new person
+    /// </summary>
+    /// <param name="personDto">Person data to be added</param>
+    /// <param name="cancellationToken">Cancellation token</param>
+    /// <returns></returns>
     [HttpPost]
     [Produces("application/json")]
     [ProducesResponseType(typeof(Guid), StatusCodes.Status201Created)]
@@ -29,21 +38,29 @@ public class PersonsController : ControllerBase
     {
         try
         {
-            _logger.LogInformation($"[{nameof(CreatePerson)}] initiated.");
-            
+            _logger.LogInformation($"{nameof(PersonsController)} -> Create person {personDto.FirstName} initiated.");
+
+            //to do: validator, return bad request
+
             CreatePersonCommand command = new CreatePersonCommand(personDto.FirstName, personDto.LastName, personDto.PersonSkills, personDto.PersonSocialMediaAccounts);
             var personId = await _mediator.Send(command, cancellationToken);
 
-            _logger.LogInformation($"[{nameof(CreatePerson)}] was successfully executed for person: {personDto.FirstName}");
-             return CreatedAtAction(nameof(GetPerson), new { id = personId }, personId);
+            _logger.LogInformation($"{nameof(PersonsController)} -> Create person {personDto.FirstName} succeeded.");
+            return CreatedAtAction(nameof(GetPerson), new { id = personId }, personId);
         }
-        catch (Exception ex)
+        catch
         {
-            _logger.LogError(ex, $"[{nameof(CreatePerson)}] failed.");
-            return StatusCode(StatusCodes.Status500InternalServerError);
+            _logger.LogError($"{nameof(PersonsController)} -> Create person {personDto.FirstName} failed.");
+            throw;
         }
     }
 
+    /// <summary>
+    /// Gets concrete person by provided id
+    /// </summary>
+    /// <param name="id">Identifier</param>
+    /// <param name="cancellationToken">Cancellation token</param>
+    /// <returns></returns>
     [HttpGet("{id}")]
     [ProducesResponseType(typeof(PersonResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -52,28 +69,33 @@ public class PersonsController : ControllerBase
     {
         try
         {
-            _logger.LogInformation($"[{nameof(GetPerson)}] initiated.");
+            _logger.LogInformation($"{nameof(PersonsController)} -> Get person {id} initiated.");
 
             var query = new GetPersonByIdQuery(id);
             var result = await _mediator.Send(query, cancellationToken);
 
             if (result == null)
             {
-                _logger.LogError($"[{nameof(GetPerson)}] request failed because no data was found for the provided id: {id}.");
-                return NotFound($"No person was found for the id: {id}.");
+                var msg = $"{nameof(PersonsController)} -> Person {id} not found";
+                _logger.LogError(msg);
+                return NotFound(msg);
             }
 
-            _logger.LogInformation($"[{nameof(GetPerson)}] sucessfully executed.");
-
+            _logger.LogInformation($"{nameof(PersonsController)} -> Get person {id} succeeded.");
             return Ok(result);
         }
-        catch (Exception ex)
+        catch
         {
-            _logger.LogError(ex, $"[{nameof(GetPerson)}] failed.");
-            return StatusCode(StatusCodes.Status500InternalServerError);
+            _logger.LogError($"{nameof(PersonsController)} -> Get person {id} failed.");
+            throw;
         }
     }
 
+    /// <summary>
+    /// Gets all persons
+    /// </summary>
+    /// <param name="cancellationToken">Cancellation Token</param>
+    /// <returns></returns>
     [HttpGet]
     [ProducesResponseType(typeof(IEnumerable<PersonResponse>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -82,21 +104,23 @@ public class PersonsController : ControllerBase
     {
         try
         {
-            _logger.LogInformation($"[{nameof(GetPersons)}] initiated.");
+            _logger.LogInformation($"{nameof(PersonsController)} -> Get persons initiated.");
 
             var result = await _mediator.Send(new GetPersonsQuery(), cancellationToken);
-            if(result is null)
+            if (result is null)
             {
-                return NotFound($"No person was found.");
+                var msg = $"{nameof(PersonsController)} -> No person found";
+                _logger.LogError(msg);
+                return NotFound(msg);
             }
 
-            _logger.LogInformation($"[{nameof(GetPersons)}] sucessfully executed.");
+            _logger.LogInformation($"{nameof(PersonsController)} -> Get persons succeeded.");
             return Ok(result);
         }
-        catch (Exception ex)
+        catch
         {
-            _logger.LogError(ex, $"[{nameof(GetPersons)}] failed.");
-            return StatusCode(StatusCodes.Status500InternalServerError);
+            _logger.LogError($"{nameof(PersonsController)} -> Get person failed.");
+            throw;
         }
     }
 }

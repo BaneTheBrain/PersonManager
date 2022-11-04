@@ -1,7 +1,7 @@
 ﻿using PersonManagerService.Domain.Abstractions;
 using PersonManagerService.Persistance.Repositories;
 
-namespace PersonManagerService.API.Extensions.Midleware;
+namespace PersonManagerService.API.Extensions.ServiceRegistrations;
 
 public static class RegisterRepositoriesExtension
 {

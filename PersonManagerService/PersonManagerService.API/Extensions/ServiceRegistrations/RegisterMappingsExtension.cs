@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using PersonManagerService.Domain.Mapping;
 
-namespace PersonManagerService.API.Extensions.Midleware;
+namespace PersonManagerService.API.Extensions.ServiceRegistrations;
 
 public static class RegisterMappingsExtension
 {

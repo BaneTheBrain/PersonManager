@@ -25,17 +25,17 @@ public class GetPersonsQueryHandler : IRequestHandler<GetPersonsQuery, IEnumerab
     {
         try
         {
-            _logger.LogInformation($"[{nameof(GetPersonsQueryHandler)}] Getting a persons from the repository initiated.");
+            _logger.LogInformation($"{nameof(GetPersonByIdQueryHandler)} -> Handle request initiated.");
 
             var persons = await _uow.PersonRepository.GetPersonWithSocialMediaAccountsAndSkills(cancellationToken);
-            var retVal = persons?.Select(person => _mapper.Map<Person, PersonResponse>(person));
+            var retVal = persons.Select(person => _mapper.Map<Person, PersonResponse>(person));
 
-            _logger.LogInformation($"[{nameof(GetPersonsQueryHandler)}] Getting a persons from the repository suceeded.");
+            _logger.LogInformation($"{nameof(GetPersonByIdQueryHandler)} -> Handle request suceeded.");
             return retVal;
         }
-        catch (Exception)
+        catch
         {
-            _logger.LogError($"[{nameof(GetPersonsQueryHandler)}]Getting a persons from the repository failed.");
+            _logger.LogError($"{nameof(GetPersonByIdQueryHandler)} -> Handle request failed.");
             throw;
         }
     }
