@@ -2,6 +2,6 @@
 
 namespace PersonManagerService.Domain.Abstractions;
 
-public interface IQuery<out TResult> : IRequest<TResult>
+public interface IQuery<TResult> : IRequest<TResult>
 {
 }

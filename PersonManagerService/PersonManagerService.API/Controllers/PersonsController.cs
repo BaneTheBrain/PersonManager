@@ -40,8 +40,6 @@ public class PersonsController : ControllerBase
         {
             _logger.LogInformation($"{nameof(PersonsController)} -> Create person {personDto.FirstName} initiated.");
 
-            //to do: validator, return bad request
-
             CreatePersonCommand command = new CreatePersonCommand(personDto.FirstName, personDto.LastName, personDto.PersonSkills, personDto.PersonSocialMediaAccounts);
             var personId = await _mediator.Send(command, cancellationToken);
 
@@ -76,9 +74,8 @@ public class PersonsController : ControllerBase
 
             if (result == null)
             {
-                var msg = $"{nameof(PersonsController)} -> Person {id} not found";
-                _logger.LogError(msg);
-                return NotFound(msg);
+                _logger.LogError($"{nameof(PersonsController)} -> Person {id} not found");
+                return NotFound($"Person {id} not found");
             }
 
             _logger.LogInformation($"{nameof(PersonsController)} -> Get person {id} succeeded.");
@@ -109,9 +106,8 @@ public class PersonsController : ControllerBase
             var result = await _mediator.Send(new GetPersonsQuery(), cancellationToken);
             if (result is null)
             {
-                var msg = $"{nameof(PersonsController)} -> No person found";
-                _logger.LogError(msg);
-                return NotFound(msg);
+                _logger.LogError($"{nameof(PersonsController)} -> No person found");
+                return NotFound($"No person found");
             }
 
             _logger.LogInformation($"{nameof(PersonsController)} -> Get persons succeeded.");

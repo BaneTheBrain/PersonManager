@@ -5,6 +5,8 @@ using PersonManagerService.API.Extensions.ServiceRegistrations;
 using PersonManagerService.API.Extensions.Middleware;
 using System.Reflection;
 using Serilog;
+using static System.Net.Mime.MediaTypeNames;
+using MediatR;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,7 +17,9 @@ builder.Services.RegisterSwagger();
 builder.Services.RegisterDatabases(builder.Configuration);
 builder.Services.RegisterRepositories();
 builder.Services.RegisterMiddlewares();
-builder.Services.RegisterApplicationMediatR();
+builder.Services.RegisterRequestValidators();
+builder.Services.AddMediatR(typeof(PersonManagerService.Application.AssemblyReference).Assembly);
+
 builder.Services.RegisterMappers();
 builder.RegisterLoggers();
 
