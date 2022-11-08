@@ -14,7 +14,7 @@ namespace PersonManagerService.API.Extensions.ServiceRegistrations
                 .Enrich.FromLogContext()
                 .CreateLogger();
 
-            builder.Logging.ClearProviders();
+            //builder.Logging.ClearProviders();
             builder.Logging.AddSerilog(logger);
         }
     }

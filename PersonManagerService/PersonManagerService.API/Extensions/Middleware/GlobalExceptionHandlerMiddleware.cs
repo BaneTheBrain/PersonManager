@@ -1,5 +1,8 @@
 ﻿using FluentValidation;
+using System.ComponentModel.DataAnnotations;
+using System.Net;
 using System.Text.Json;
+using ValidationException = FluentValidation.ValidationException;
 
 namespace PersonManagerService.API.Extensions.Middleware
 {
@@ -16,28 +19,27 @@ namespace PersonManagerService.API.Extensions.Middleware
             {
                 await next(context);
             }
-            catch (ValidationException validationException)
-            {
-                _logger.LogError(validationException, validationException.Message);
-
-                var responseError = new CustomResponseErrorDetails(System.Net.HttpStatusCode.BadRequest, "Bad request error", validationException.Message, validationException.Errors);
-                await WriteResponseAsync(context, responseError, System.Net.HttpStatusCode.BadRequest);
-            }
             catch (Exception e)
             {
-                _logger.LogError(e, e.Message);
-
-                var responseError = new CustomResponseErrorDetails(System.Net.HttpStatusCode.InternalServerError, "Server error", e.Message);
-                await WriteResponseAsync(context, responseError, System.Net.HttpStatusCode.InternalServerError);
+                await WriteErrorResponseAsync(e, context);
             }
         }
 
-        private async Task WriteResponseAsync(HttpContext context, CustomResponseErrorDetails customResponseErrorDetails, System.Net.HttpStatusCode statusCode)
+        private async Task WriteErrorResponseAsync(Exception exception, HttpContext context)
         {
-            string jsonResponse = JsonSerializer.Serialize(customResponseErrorDetails);
+            _logger.LogError(exception, exception.Message);
+
+            CustomResponseErrorDetails errorDetails = exception switch
+            {
+                ValidationException validationException => new CustomResponseErrorDetails(HttpStatusCode.BadRequest, "Bad request error", validationException.Message, validationException.Errors),
+                _ => new CustomResponseErrorDetails(HttpStatusCode.InternalServerError, "Server error", exception.Message),
+            };
+
+            string jsonResponse = JsonSerializer.Serialize(errorDetails);
             context.Response.ContentType = "application/json";
-            context.Response.StatusCode = (int)statusCode;
+            context.Response.StatusCode = (int)errorDetails.StatusCode;
             await context.Response.WriteAsync(jsonResponse);
         }
     }
+
 }

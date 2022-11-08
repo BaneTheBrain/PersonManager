@@ -29,7 +29,7 @@ public class RequestValidationPipelineBehavior<TRequest, TResponse> : IPipelineB
 
         if(errors.Any())
         {
-            throw new ValidationException("Request validation exception.", errors);
+            throw new ValidationException($"{typeof(TRequest)} validation failed.", errors);
         }
 
         return await next();
