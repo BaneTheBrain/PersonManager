@@ -7,6 +7,10 @@ using System.Reflection;
 using Serilog;
 using static System.Net.Mime.MediaTypeNames;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Microsoft.Extensions.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,7 +23,7 @@ builder.Services.RegisterRepositories();
 builder.Services.RegisterMiddlewares();
 builder.Services.RegisterRequestValidators();
 builder.Services.AddMediatR(typeof(PersonManagerService.Application.AssemblyReference).Assembly);
-
+builder.Services.RegisterAuthentications(builder.Configuration.GetSection("SecurityKey").Value);
 builder.Services.RegisterMappers();
 builder.RegisterLoggers();
 
@@ -33,7 +37,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-//add authentication
+app.UseAuthentication();
 app.UseAuthorization();
 app.UseMiddleware<GlobalExceptionHandlerMiddleware>();
 app.MapControllers();

@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PersonManagerService.Domain.Commands.CreatePerson;
 using PersonManagerService.Domain.DTOs;
@@ -12,6 +13,7 @@ namespace PersonManagerService.API.Controllers;
 /// </summary>
 [Route("api/[controller]")]
 [ApiController]
+[Authorize]
 public class PersonsController : ControllerBase
 {
     private readonly IMediator _mediator;
@@ -34,6 +36,7 @@ public class PersonsController : ControllerBase
     [ProducesResponseType(typeof(Guid), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [Authorize(Roles ="admin")]
     public async Task<ActionResult<Guid>> CreatePerson(PersonRequest personDto, CancellationToken cancellationToken = default)
     {
         try
