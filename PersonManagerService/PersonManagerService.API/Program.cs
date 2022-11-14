@@ -11,6 +11,11 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using PersonManagerService.Domain.Abstractions;
+using PersonManagerService.Persistance.Repositories;
+using PersonManagerService.Application.Service;
+using PersonManagerService.Domain.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,7 +24,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.RegisterSwagger();
 builder.Services.RegisterDatabases(builder.Configuration);
-builder.Services.RegisterRepositories();
+builder.Services.Configure<ResilientOptions>(builder.Configuration.GetSection(nameof(ResilientOptions)));
+builder.Services.RegisterServices();
 builder.Services.RegisterMiddlewares();
 builder.Services.RegisterRequestValidators();
 builder.Services.AddMediatR(typeof(PersonManagerService.Application.AssemblyReference).Assembly);

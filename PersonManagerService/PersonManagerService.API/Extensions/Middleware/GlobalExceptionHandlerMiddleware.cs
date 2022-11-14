@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using PersonManagerService.Domain.Queries.GetPerson;
 using System.ComponentModel.DataAnnotations;
 using System.Net;
 using System.Text.Json;
@@ -27,7 +28,7 @@ namespace PersonManagerService.API.Extensions.Middleware
 
         private async Task WriteErrorResponseAsync(Exception exception, HttpContext context)
         {
-            _logger.LogError(exception, exception.Message);
+            _logger.LogError($"{nameof(GlobalExceptionHandlerMiddleware)} -> {exception.Message}");
 
             CustomResponseErrorDetails errorDetails = exception switch
             {

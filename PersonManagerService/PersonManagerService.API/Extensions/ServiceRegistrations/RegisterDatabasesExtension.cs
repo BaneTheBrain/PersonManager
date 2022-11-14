@@ -7,7 +7,7 @@ namespace PersonManagerService.API.Extensions.ServiceRegistrations;
 
 public static class RegisterDatabasesExtension
 {
-    public static void RegisterDatabases(this IServiceCollection serviceCollection, ConfigurationManager configuration)
+    public static void RegisterDatabases(this IServiceCollection serviceCollection, IConfiguration configuration)
     {
         var dbConnectionString = configuration.GetSection("DatabaseOptions:ConnectionString").Value;
         if (dbConnectionString is not null)
