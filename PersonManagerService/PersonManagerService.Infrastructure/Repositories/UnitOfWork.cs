@@ -1,5 +1,6 @@
 ﻿using PersonManagerService.Domain.Abstractions;
 using PersonManagerService.Infrastructure.Contexts;
+using PersonManagerService.Infrastructure.Repositories;
 
 namespace PersonManagerService.Persistance.Repositories;
 
@@ -8,6 +9,7 @@ public sealed class UnitOfWork : IUnitOfWork, IDisposable
     private bool _disposed;
     private readonly PersonManagerServiceDbContext _dbContext;
     private IPersonRepository _personRepository;
+    private ISocialMediaAccountRepository _socialMediaAccountRepository;
 
     public UnitOfWork(PersonManagerServiceDbContext dbContext)
     {
@@ -15,6 +17,8 @@ public sealed class UnitOfWork : IUnitOfWork, IDisposable
     }
 
     public IPersonRepository PersonRepository => _personRepository ?? (_personRepository = new PersonRepository(_dbContext));
+
+    public ISocialMediaAccountRepository SocialMediaAccountRepository => _socialMediaAccountRepository ?? (_socialMediaAccountRepository = new SocialMediaAccountRepository(_dbContext));
 
     public Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {

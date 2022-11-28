@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using PersonManagerService.Application.Mapping;
 using PersonManagerService.Domain.Mapping;
 
 namespace PersonManagerService.API.Extensions.ServiceRegistrations;
@@ -10,6 +11,7 @@ public static class RegisterMappingsExtension
         var mapperConfig = new MapperConfiguration(mc =>
         {
             mc.AddProfile(new PersonProfile());
+            mc.AddProfile(new SocialMediaAccountProfile());
         });
 
         IMapper mapper = mapperConfig.CreateMapper();

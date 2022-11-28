@@ -2,14 +2,7 @@
 using Polly.Retry;
 using Polly.Wrap;
 using Polly;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using PersonManagerService.Domain.Queries.GetPerson;
 using Microsoft.Extensions.Logging;
-using PersonManagerService.Domain.Queries.GetPersons;
 using PersonManagerService.Application.Abstractions;
 using PersonManagerService.Domain.Configuration;
 using Microsoft.Extensions.Options;

@@ -16,6 +16,7 @@ using PersonManagerService.Domain.Abstractions;
 using PersonManagerService.Persistance.Repositories;
 using PersonManagerService.Application.Service;
 using PersonManagerService.Domain.Configuration;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,6 +34,15 @@ builder.Services.RegisterAuthentications(builder.Configuration.GetSection("Secur
 builder.Services.RegisterMappers();
 builder.RegisterLoggers();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: "personPortalCors",
+                      policy =>
+                      {
+                          policy.WithOrigins("http://localhost:4200");
+                      });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -46,6 +56,7 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseMiddleware<GlobalExceptionHandlerMiddleware>();
+app.UseCors("personPortalCors");
 app.MapControllers();
 
 using (var scope = app.Services.CreateScope())

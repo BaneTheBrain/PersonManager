@@ -8,7 +8,7 @@ namespace PersonManagerService.Persistance.Repositories;
 
 public abstract class BaseRepository<T> : IBaseRepository<T> where T : class
 {
-    private readonly PersonManagerServiceDbContext _dbContext;
+    protected readonly PersonManagerServiceDbContext _dbContext;
     protected readonly DbSet<T> _dbSet;
 
     public BaseRepository(PersonManagerServiceDbContext personManagerServiceDbContext)

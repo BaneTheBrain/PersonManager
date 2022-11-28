@@ -20,8 +20,11 @@ public class PersonManagerServiceDbContext : DbContext
     {
         var personAId = Guid.NewGuid();
         var personBId = Guid.NewGuid();
+        var personCId = Guid.NewGuid();
+
         var fbAccountId = Guid.NewGuid();
         var twitterAccountId = Guid.NewGuid();
+        var accountIds = Enumerable.Empty<Guid>();
 
         modelBuilder.HasDefaultSchema("dbo");
 
@@ -35,7 +38,8 @@ public class PersonManagerServiceDbContext : DbContext
 
             entity.HasData(
                  new Person { PersonId = personAId, FirstName = "Pera", LastName = "Zdera" },
-                 new Person { PersonId = personBId, FirstName = "Mitar", LastName = "Miric" }
+                 new Person { PersonId = personBId, FirstName = "Mita", LastName = "Brzi" },
+                 new Person { PersonId = personCId, FirstName = "Zika", LastName = "Klinika" }
              );
         });
 
@@ -72,7 +76,7 @@ public class PersonManagerServiceDbContext : DbContext
                 new PersonSkill { PersonId = personAId, Name = "debeo", PersonSkillId = Guid.NewGuid() },
                 new PersonSkill { PersonId = personAId, Name = "spor", PersonSkillId = Guid.NewGuid() },
                 new PersonSkill { PersonId = personBId, Name = "brz", PersonSkillId = Guid.NewGuid() },
-                new PersonSkill { PersonId = personBId, Name = "peva", PersonSkillId = Guid.NewGuid() }
+                new PersonSkill { PersonId = personBId, Name = "jak", PersonSkillId = Guid.NewGuid() }
             );
         });
 
@@ -99,7 +103,8 @@ public class PersonManagerServiceDbContext : DbContext
             entity.HasData(
                   new PersonSocialMediaAccount { PersonId = personAId, SocialMediaAccountId = fbAccountId, Address = "pera@fb" },
                   new PersonSocialMediaAccount { PersonId = personBId, SocialMediaAccountId = fbAccountId, Address = "mita@fb" },
-                  new PersonSocialMediaAccount { PersonId = personBId, SocialMediaAccountId = twitterAccountId, Address = "mita@tw" }
+                  new PersonSocialMediaAccount { PersonId = personBId, SocialMediaAccountId = twitterAccountId, Address = "mita@tw" },
+                  new PersonSocialMediaAccount { PersonId = personCId, SocialMediaAccountId = twitterAccountId, Address = $"zika@tw" }
                 );
         });
     }
