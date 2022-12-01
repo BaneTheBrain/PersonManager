@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  personServiceUrl: 'https://localhost:7080/api/'
+  personManagerServiceUrl: 'https://localhost:7080/api/'
 };
 
 /*

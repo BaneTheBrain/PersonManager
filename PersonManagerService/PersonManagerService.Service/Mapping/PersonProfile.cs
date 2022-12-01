@@ -48,7 +48,7 @@ public class PersonProfile : Profile
     private IEnumerable<PersonSocialMediaAccountResponse> MapSocialMediaAccounts(Person person)
     {
         return person.PersonSocialMediaAccounts.Select(psma =>
-            new PersonSocialMediaAccountResponse(psma.Address, psma.SocialMediaAccount.Type));
+            new PersonSocialMediaAccountResponse(psma.Address, psma.SocialMediaAccount.Type, psma.SocialMediaAccount.SocialMediaAccountId));
     }
 
     private IEnumerable<PersonSkill> MapSocialSkills(CreatePersonCommand createPersonCommand)

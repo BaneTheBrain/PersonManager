@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { Subscription } from "rxjs";
-import { IPerson } from "../model/person";
-import { PersonService } from "../services/person.service";
+import { IPerson } from "../model/read/person";
+import { PersonManagerService } from "../services/person.service";
 
 @Component({
     templateUrl: './person-list.component.html',
@@ -16,11 +16,11 @@ export class PersonListComponent implements OnInit, OnDestroy
     sub! : Subscription;
     private _listFilter = "";
 
-    constructor(private _personService : PersonService) {
+    constructor(private _personManagerService : PersonManagerService) {
     }
 
     ngOnInit(): void {
-        this.sub = this._personService.getPersons().subscribe({
+        this.sub = this._personManagerService.getPersons().subscribe({
             next: prs => 
             {
               this.persons = prs;
