@@ -42,8 +42,9 @@
                     <select class="form-control" formControlName="selectedSocialMediaAccountId">
                         <option *ngFor="let account of socialMediaAccounts" [value]="account.socialMediaAccountId">{{account.type}}</option>
                     </select>
-                    <input id="personSocialMediaAccountAddressId" formControlName="personSocialMediaAccountAddress" class="form-control">
+                    <input id="personSocialMediaAccountAddressId" formControlName="personSocialMediaAccountAddress" [ngClass]="{'is-invalid': psmaValidationMessage }" class="form-control">
                     <button (click)="onAddPersonSocialMediaAccount()"> Add </button>
+                    <span class="invalid-feedback"> {{psmaValidationMessage}} </span>
                 </div>
             </div>
 

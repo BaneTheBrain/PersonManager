@@ -25,6 +25,7 @@ export class PersonCreateComponent implements OnInit, OnDestroy {
   firstNameValidationMessage: string = '';
   lastNameValidationMessage: string = '';
   socialSkillValidationMessage: string = '';
+  psmaValidationMessage: string = '';
 
   constructor(private formBuilder: FormBuilder, private _personManagerService: PersonManagerService, private _router: Router) {
 
@@ -43,6 +44,10 @@ export class PersonCreateComponent implements OnInit, OnDestroy {
       {
         minlength: 'Social skill must be minimal lenght of 3',
         pattern: 'Social skill must be all letters'
+      },
+      psma:
+      {
+        minlength: 'Person social media account address must be minimal lenght of 3',
       }
     };
   }
@@ -61,7 +66,7 @@ export class PersonCreateComponent implements OnInit, OnDestroy {
         firstName: ['', [Validators.required, Validators.minLength(3), Validators.pattern('^[a-zA-Z ]*$')]],
         lastName: ['', [Validators.required, Validators.minLength(3), Validators.pattern('^[a-zA-Z ]*$')]],
         socialSkill: ['', [Validators.minLength(3), Validators.pattern('^[a-zA-Z ]*$')]],
-        personSocialMediaAccountAddress: '',
+        personSocialMediaAccountAddress: ['', [Validators.minLength(3)]],
         selectedSocialMediaAccountId: ''
       }
     );
@@ -76,6 +81,10 @@ export class PersonCreateComponent implements OnInit, OnDestroy {
 
     this.addPersonForm.get('socialSkill')?.valueChanges.pipe(debounceTime(1000)).subscribe(
       value => this.setValidationMsgForSocialSkill(this.addPersonForm.controls['socialSkill'])
+    );
+
+    this.addPersonForm.get('personSocialMediaAccountAddress')?.valueChanges.pipe(debounceTime(1000)).subscribe(
+      value => this.setValidationMsgForPSMA(this.addPersonForm.controls['personSocialMediaAccountAddress'])
     );
   }
 
@@ -103,6 +112,17 @@ export class PersonCreateComponent implements OnInit, OnDestroy {
     }
     if (c.errors && c.dirty) {
       this.socialSkillValidationMessage += Object.keys(c.errors).map(key => this.validationMessages['socialSkill'][key]).join(' ');
+    }
+  }
+
+  setValidationMsgForPSMA(c: AbstractControl): void {
+    this.psmaValidationMessage = '';
+
+    if (this.personSocialMediaAccounts.length === 0 && c.touched) {
+      this.psmaValidationMessage = 'At least one person social media account must be added.';
+    }
+    if (c.errors && c.dirty) {
+      this.psmaValidationMessage += Object.keys(c.errors).map(key => this.validationMessages['psma'][key]).join(' ');
     }
   }
 
@@ -152,6 +172,7 @@ export class PersonCreateComponent implements OnInit, OnDestroy {
     if (index !== -1) {
       this.personSocialMediaAccounts.splice(index, 1);
     }
+    this.setValidationMsgForPSMA(this.addPersonForm.controls['personSocialMediaAccountAddress'])
   }
 
   formValid(): boolean {
