@@ -2,44 +2,47 @@
     <div class="card-header">
         New person
     </div>
+
     <div class="card-body">
-        <form class="col-md-5">
+       
+        <form novalidate [formGroup]="addPersonForm" class="col-md-5">
             <div class="form-group">
-                <label>First Name</label>
-                <input name="firstname" class="form-control" [(ngModel)]="firstName">
+                <label for="firstNameId">First Name</label>
+                <input id="firstNameId" formControlName="firstName" [ngClass]="{'is-invalid': firstNameValidationMessage }" class="form-control">
+                <span class="invalid-feedback"> {{firstNameValidationMessage}} </span>
             </div>
 
             <div class="form-group">
-                <label>Last Name</label>
-                <input name="lastname" class="form-control" [(ngModel)]="lastName">
+                <label for="lastNameId" >Last Name</label>
+                <input id="lastNameId" formControlName="lastName" [ngClass]="{'is-invalid': lastNameValidationMessage }" class="form-control">
+                <span class="invalid-feedback"> {{lastNameValidationMessage}} </span>
             </div>
 
             <div class="form-group">
-                <label>Social Skills</label>
+                <label for="socialSkillId">Social Skills</label>
                 <br>
                 <div class="btn-group col-md-10">
-                    <input name="socialSkill" class="form-control" [(ngModel)]="socialSkill">
-                    <button (click)="onAddSocialSkill(socialSkill)"> Add </button>
+                    <input id="socialSkillId" formControlName="socialSkill" class="form-control" [ngClass]="{'is-invalid': socialSkillValidationMessage }">
+                    <button (click)="onAddSocialSkill()"> Add </button>
+                    <span class="invalid-feedback"> {{socialSkillValidationMessage}} </span>
                 </div>
+              
+                <h6 *ngFor="let skill of socialSkills" class="pt-1">
+                    <div class="btn-group">
+                        <span class="btn bg-info px-3 ">{{skill}}</span>
+                        <button (click)="onDeleteSocialSkill(skill)"> Delete </button>
+                    </div>
+                </h6>
             </div>
 
-            <h6 *ngFor="let skill of socialSkills" class="pt-1">
-                <div class="btn-group">
-                    <span class="btn bg-info px-3 ">{{skill}}</span>
-                    <button (click)="onDeleteSocialSkill(skill)"> Delete </button>
-                </div>
-            </h6>
-
             <div class="form-group">
-                <label>Social Media Accounts</label>
+                <label for="personSocialMediaAccountAddressId">Social Media Accounts</label>
                 <br>
                 <div class="btn-group col-md-10">
-                    <select class="form-control" name="selectedSocialMediaAccount"
-                        (change)="onSelectionChanged(selectedSocialMediaAccountId)" [(ngModel)]="selectedSocialMediaAccountId">
+                    <select class="form-control" formControlName="selectedSocialMediaAccountId">
                         <option *ngFor="let account of socialMediaAccounts" [value]="account.socialMediaAccountId">{{account.type}}</option>
                     </select>
-                    <input name="personSocialMediaAccountAddress" class="form-control"
-                        [(ngModel)]="personSocialMediaAccountAddress">
+                    <input id="personSocialMediaAccountAddressId" formControlName="personSocialMediaAccountAddress" class="form-control">
                     <button (click)="onAddPersonSocialMediaAccount()"> Add </button>
                 </div>
             </div>
@@ -52,7 +55,12 @@
             </h6>
 
             <br>
-            <button (click)="onSubmit()" class="btn btn-primary">Ok</button>
-        </form>
+            <button (click)="onSubmit()" [disabled]="!formValid()" class="btn btn-primary">
+                Save
+            </button>
+            </form>
+
+        <!-- <br><br>
+        Value : {{addPersonForm.value | json}} -->
     </div>
 </div>
