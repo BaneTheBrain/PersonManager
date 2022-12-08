@@ -1,8 +1,7 @@
 ﻿using PersonManagerService.Application.DTOs;
 using PersonManagerService.Domain.Abstractions;
-using PersonManagerService.Domain.DTOs;
 
-namespace PersonManagerService.Domain.Queries.GetSocialMediaAccount;
+namespace PersonManagerService.Application.Queries.GetSocialMediaAccount;
 
 public sealed record GetSocialMediaAccountsQuery() : IQuery<IEnumerable<SocialMediaAccountResponse>>;
 

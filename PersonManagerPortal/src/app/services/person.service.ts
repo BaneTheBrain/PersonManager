@@ -2,9 +2,9 @@ import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable, catchError, tap, throwError, map } from "rxjs";
 import { environment } from "src/environments/environment";
-import { IPerson } from "../model/read/person";
-import { ISocialMediaAccount } from "../model/read/socialmediaaccount";
-import { CreatePerson } from "../model/write/person";
+import { PersonResponse } from "../model/read/person";
+import { SocialMediaAccountResponse } from "../model/read/socialmediaaccount";
+import { PersonRequest } from "../model/write/person";
 
 @Injectable(
     {
@@ -17,29 +17,34 @@ export class PersonManagerService {
 
     constructor(private httpClient: HttpClient) { }
 
-    getPersons(): Observable<IPerson[]> {
-        return this.httpClient.get<IPerson[]>(environment.personManagerServiceUrl + this._personEndpoint)
+    getPersons(): Observable<PersonResponse[]> {
+        return this.httpClient.get<PersonResponse[]>(environment.personManagerServiceUrl + this._personEndpoint)
             .pipe(
                 tap(data => console.log('all', JSON.stringify(data))),
                 catchError(this.handleError)
             );
     }
 
-    getPerson(id: string): Observable<IPerson | undefined> {
-        return this.httpClient.get<IPerson>(environment.personManagerServiceUrl + this._personEndpoint + '/' + id)
+    getPerson(id: string): Observable<PersonResponse> {
+        return this.httpClient.get<PersonResponse>(environment.personManagerServiceUrl + this._personEndpoint + '/' + id)
             .pipe(
                 tap(data => console.log('single', JSON.stringify(data))),
                 catchError(this.handleError)
             );
     }
 
-    addPerson(person: CreatePerson): Observable<string> {
+    addPerson(person: PersonRequest): Observable<string> {
         return this.httpClient.post<string>(environment.personManagerServiceUrl + this._personEndpoint, person)
             .pipe(catchError(this.handleError));
     }
 
-    getSocialMediaAccounts(): Observable<ISocialMediaAccount[]> {
-        return this.httpClient.get<ISocialMediaAccount[]>(environment.personManagerServiceUrl + this._socialMediaAccountEndpoint)
+    updatePerson(person: PersonRequest): Observable<string> {
+        return this.httpClient.put<string>(environment.personManagerServiceUrl + this._personEndpoint, person)
+            .pipe(catchError(this.handleError));
+    }
+
+    getSocialMediaAccounts(): Observable<SocialMediaAccountResponse[]> {
+        return this.httpClient.get<SocialMediaAccountResponse[]>(environment.personManagerServiceUrl + this._socialMediaAccountEndpoint)
             .pipe(
                 tap(data => console.log('all', JSON.stringify(data))),
                 catchError(this.handleError)

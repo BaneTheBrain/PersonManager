@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using PersonManagerService.Application.DTOs;
-using PersonManagerService.Domain.Commands.CreatePerson;
 using PersonManagerService.Domain.Models;
 
 namespace PersonManagerService.Application.Mapping;

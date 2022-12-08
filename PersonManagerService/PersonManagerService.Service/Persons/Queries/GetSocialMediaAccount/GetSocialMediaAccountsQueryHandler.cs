@@ -1,18 +1,11 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using PersonManagerService.Application.Abstractions;
 using PersonManagerService.Application.DTOs;
-using PersonManagerService.Application.Service;
 using PersonManagerService.Domain.Abstractions;
-using PersonManagerService.Domain.DTOs;
 using PersonManagerService.Domain.Models;
-using PersonManagerService.Domain.Queries.GetPerson;
-using PersonManagerService.Domain.Queries.GetPersons;
-using PersonManagerService.Domain.Queries.GetSocialMediaAccount;
-using Polly.CircuitBreaker;
 
-namespace PersonManagerService.Application.Persons.Queries.GetSocialMediaAccount;
+namespace PersonManagerService.Application.Queries.GetSocialMediaAccount;
 
 public class GetSocialMediaAccountsQueryHandler : IRequestHandler<GetSocialMediaAccountsQuery, IEnumerable<SocialMediaAccountResponse>>
 {

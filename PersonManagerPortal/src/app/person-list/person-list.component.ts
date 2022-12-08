@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { Subscription } from "rxjs";
-import { IPerson } from "../model/read/person";
+import { PersonResponse } from "../model/read/person";
 import { PersonManagerService } from "../services/person.service";
 
 @Component({
@@ -9,8 +9,8 @@ import { PersonManagerService } from "../services/person.service";
 })
 export class PersonListComponent implements OnInit, OnDestroy
 {
-    persons: IPerson[] = [];
-    filteredPersons: IPerson[] = [];
+    persons: PersonResponse[] = [];
+    filteredPersons: PersonResponse[] = [];
     pageTitle: string = 'Person list'
     errorMsg : string = "";
     sub! : Subscription;
@@ -45,9 +45,9 @@ export class PersonListComponent implements OnInit, OnDestroy
       this.filteredPersons = this.performFilteringBy(this._listFilter);
     }
 
-    performFilteringBy(condition : string) : IPerson[]
+    performFilteringBy(condition : string) : PersonResponse[]
     {
-      return this.persons.filter((prod : IPerson) => 
+      return this.persons.filter((prod : PersonResponse) => 
         prod.fullName.toLocaleLowerCase().includes(condition.toLocaleLowerCase())
       );
     }

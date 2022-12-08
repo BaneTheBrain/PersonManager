@@ -1,9 +1,9 @@
 ﻿using FluentValidation;
-using PersonManagerService.Domain.Commands.CreatePerson;
+using PersonManagerService.Application.Commands.CreatePerson;
 
 namespace PersonManagerService.Application.Validators;
 
-public class CreatePersonCommandValidator : AbstractValidator<CreatePersonCommand>
+public class CreatePersonCommandValidator : AbstractValidator<CreateOrUpdatePersonCommand>
 {
 	public CreatePersonCommandValidator()
 	{

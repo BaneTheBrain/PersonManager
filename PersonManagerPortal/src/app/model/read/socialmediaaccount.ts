@@ -1,4 +1,4 @@
-export interface ISocialMediaAccount
+export interface SocialMediaAccountResponse
 {
     socialMediaAccountId : string
     type : string

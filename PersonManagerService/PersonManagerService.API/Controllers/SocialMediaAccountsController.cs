@@ -1,9 +1,7 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PersonManagerService.Application.DTOs;
-using PersonManagerService.Domain.DTOs;
-using PersonManagerService.Domain.Queries.GetSocialMediaAccount;
+using PersonManagerService.Application.Queries.GetSocialMediaAccount;
 
 namespace PersonManagerService.API.Controllers
 {

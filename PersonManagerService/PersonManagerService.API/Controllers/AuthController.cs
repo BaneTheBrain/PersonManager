@@ -1,16 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using PersonManagerService.Application.DTOs;
-using PersonManagerService.Domain.Commands.CreatePerson;
-using PersonManagerService.Domain.DTOs;
 using PersonManagerService.Domain.Models;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
-using static System.Net.WebRequestMethods;
 
 namespace PersonManagerService.API.Controllers
 {

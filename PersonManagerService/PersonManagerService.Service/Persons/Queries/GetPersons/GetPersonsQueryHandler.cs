@@ -2,16 +2,13 @@
 using MediatR;
 using Microsoft.Extensions.Logging;
 using PersonManagerService.Domain.Abstractions;
-using PersonManagerService.Domain.DTOs;
-using PersonManagerService.Domain.Queries.GetPerson;
 using PersonManagerService.Domain.Models;
-using Polly.Retry;
-using Polly;
 using Polly.CircuitBreaker;
-using Polly.Wrap;
 using PersonManagerService.Application.Abstractions;
+using PersonManagerService.Application.DTOs;
+using PPersonManagerService.Application.Queries.GetPerson;
 
-namespace PersonManagerService.Domain.Queries.GetPersons;
+namespace PersonManagerService.Application.Queries.GetPersons;
 
 public class GetPersonsQueryHandler : IRequestHandler<GetPersonsQuery, IEnumerable<PersonResponse>>
 {
@@ -33,7 +30,7 @@ public class GetPersonsQueryHandler : IRequestHandler<GetPersonsQuery, IEnumerab
     {
         try
         {
-            _logger.LogInformation($"{nameof(GetPersonByIdQueryHandler)} -> Handle request initiated.");
+            _logger.LogInformation($"{nameof(GetPersonsQueryHandler)} -> Handle request initiated.");
 
             if (_resilientService.CircutBreakerPolicy.CircuitState == CircuitState.Open)
             {
@@ -43,12 +40,12 @@ public class GetPersonsQueryHandler : IRequestHandler<GetPersonsQuery, IEnumerab
             var persons = await _resilientService.ResilientPolicy.ExecuteAsync(() =>_uow.PersonRepository.GetPersonWithSocialMediaAccountsAndSkills(cancellationToken));
             var retVal = persons.Select(person => _mapper.Map<Person, PersonResponse>(person));
 
-            _logger.LogInformation($"{nameof(GetPersonByIdQueryHandler)} -> Handle request suceeded.");
+            _logger.LogInformation($"{nameof(GetPersonsQueryHandler)} -> Handle request suceeded.");
             return retVal;
         }
         catch
         {
-            _logger.LogError($"{nameof(GetPersonByIdQueryHandler)} -> Handle request failed.");
+            _logger.LogError($"{nameof(GetPersonsQueryHandler)} -> Handle request failed.");
             throw;
         }
     }

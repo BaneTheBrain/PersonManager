@@ -1,7 +1,4 @@
-﻿using FluentValidation;
-using PersonManagerService.Domain.Queries.GetPerson;
-using System.ComponentModel.DataAnnotations;
-using System.Net;
+﻿using System.Net;
 using System.Text.Json;
 using ValidationException = FluentValidation.ValidationException;
 

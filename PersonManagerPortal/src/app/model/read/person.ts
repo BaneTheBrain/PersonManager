@@ -1,6 +1,5 @@
-import { IPersonSocialMediaAccount } from "../shared/personsocialmediaaccount"
 
-export interface IPerson
+export interface PersonResponse
 {
     personId : string
     firstName : string
@@ -10,5 +9,12 @@ export interface IPerson
     fullName : string
     reverseName : string
     personSkills: Array<string>
-    personSocialMediaAccounts : Array<IPersonSocialMediaAccount>
+    personSocialMediaAccounts : Array<PersonSocialMediaAccountResponse>
+}
+
+export interface PersonSocialMediaAccountResponse
+{
+    socialMediaAccountId : string
+    address : string
+    type : string
 }

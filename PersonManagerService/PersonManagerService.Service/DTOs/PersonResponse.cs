@@ -1,4 +1,4 @@
-﻿namespace PersonManagerService.Domain.DTOs;
+﻿namespace PersonManagerService.Application.DTOs;
 
 public sealed record PersonResponse(
     Guid PersonId,

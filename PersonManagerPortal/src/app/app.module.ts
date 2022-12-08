@@ -26,10 +26,11 @@ import { PersonDetailsGuard } from './services/person-details.guard';
     HttpClientModule,
     RouterModule.forRoot([
       {
-        path: 'persondetails/:id', component: PersonDetailsComponent,
+        path: 'persons/:id', component: PersonDetailsComponent,
         canActivate: [PersonDetailsGuard]
       },
       { path: 'createperson', component: PersonCreateComponent },
+      { path: 'editperson/:id', component: PersonCreateComponent },
       { path: 'persons', component: PersonListComponent },
       { path: 'welcome', component: WelcomeComponent },
       { path: '', redirectTo: 'welcome', pathMatch: 'full' },

@@ -1,10 +1,10 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using PersonManagerService.Domain.Commands.CreatePerson;
-using PersonManagerService.Domain.DTOs;
-using PersonManagerService.Domain.Queries.GetPerson;
-using PersonManagerService.Domain.Queries.GetPersons;
+using PersonManagerService.Application.Commands.CreatePerson;
+using PersonManagerService.Application.DTOs;
+using PersonManagerService.Application.Queries.GetPerson;
+using PersonManagerService.Application.Queries.GetPersons;
 
 namespace PersonManagerService.API.Controllers;
 
@@ -35,14 +35,14 @@ public class PersonsController : ControllerBase
     [ProducesResponseType(typeof(Guid), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    [Authorize(Roles ="admin")]
+    //[Authorize(Roles ="admin")]
     public async Task<ActionResult<Guid>> CreatePerson(PersonRequest personDto, CancellationToken cancellationToken = default)
     {
         try
         {
             _logger.LogInformation($"{nameof(PersonsController)} -> Create person {personDto.FirstName} initiated.");
 
-            CreatePersonCommand command = new CreatePersonCommand(personDto.FirstName, personDto.LastName, personDto.PersonSkills, personDto.PersonSocialMediaAccounts);
+            CreateOrUpdatePersonCommand command = new CreateOrUpdatePersonCommand(Guid.Empty, personDto.FirstName, personDto.LastName, personDto.PersonSkills, personDto.PersonSocialMediaAccounts);
             var personId = await _mediator.Send(command, cancellationToken);
 
             _logger.LogInformation($"{nameof(PersonsController)} -> Create person {personDto.FirstName} succeeded.");
@@ -51,6 +51,37 @@ public class PersonsController : ControllerBase
         catch
         {
             _logger.LogError($"{nameof(PersonsController)} -> Create person {personDto.FirstName} failed.");
+            throw;
+        }
+    }
+
+    /// <summary>
+    /// Updates person
+    /// </summary>
+    /// <param name="personDto">Person data to be updated</param>
+    /// <param name="cancellationToken">Cancellation token</param>
+    /// <returns></returns>
+    [HttpPut]
+    [Produces("application/json")]
+    [ProducesResponseType(typeof(Guid), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    //[Authorize(Roles ="admin")]
+    public async Task<ActionResult<Guid>> UpdatePerson(PersonRequest personDto, CancellationToken cancellationToken = default)
+    {
+        try
+        {
+            _logger.LogInformation($"{nameof(PersonsController)} -> Update person {personDto.FirstName} initiated.");
+
+            CreateOrUpdatePersonCommand command = new CreateOrUpdatePersonCommand(personDto.PersonId, personDto.FirstName, personDto.LastName, personDto.PersonSkills, personDto.PersonSocialMediaAccounts);
+            var personId = await _mediator.Send(command, cancellationToken);
+
+            _logger.LogInformation($"{nameof(PersonsController)} -> Update person {personDto.FirstName} succeeded.");
+            return CreatedAtAction(nameof(GetPerson), new { id = personId }, personId);
+        }
+        catch
+        {
+            _logger.LogError($"{nameof(PersonsController)} -> Update person {personDto.FirstName} failed.");
             throw;
         }
     }

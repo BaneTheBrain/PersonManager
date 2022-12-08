@@ -18,9 +18,8 @@ public class PersonManagerServiceDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        var personAId = Guid.NewGuid();
-        var personBId = Guid.NewGuid();
-        var personCId = Guid.NewGuid();
+        var personAId = Guid.Parse("D1BC0E4D-B4A5-411F-B69A-47F877B2C4E7");
+        var personBId = Guid.Parse("0273B148-E1BA-4697-89EF-7DF4A632C913");
 
         var fbAccountId = Guid.NewGuid();
         var twitterAccountId = Guid.NewGuid();
@@ -38,8 +37,7 @@ public class PersonManagerServiceDbContext : DbContext
 
             entity.HasData(
                  new Person { PersonId = personAId, FirstName = "Pera", LastName = "Zdera" },
-                 new Person { PersonId = personBId, FirstName = "Mita", LastName = "Brzi" },
-                 new Person { PersonId = personCId, FirstName = "Zika", LastName = "Klinika" }
+                 new Person { PersonId = personBId, FirstName = "Mitar", LastName = "Mitrovic" }
              );
         });
 
@@ -75,7 +73,7 @@ public class PersonManagerServiceDbContext : DbContext
             entity.HasData(
                 new PersonSkill { PersonId = personAId, Name = "debeo", PersonSkillId = Guid.NewGuid() },
                 new PersonSkill { PersonId = personAId, Name = "spor", PersonSkillId = Guid.NewGuid() },
-                new PersonSkill { PersonId = personBId, Name = "brz", PersonSkillId = Guid.NewGuid() },
+                new PersonSkill { PersonId = personBId, Name = "tanak", PersonSkillId = Guid.NewGuid() },
                 new PersonSkill { PersonId = personBId, Name = "jak", PersonSkillId = Guid.NewGuid() }
             );
         });
@@ -83,7 +81,8 @@ public class PersonManagerServiceDbContext : DbContext
         modelBuilder.Entity<PersonSocialMediaAccount>(entity =>
         {
             entity.ToTable("PersonSocialMediaAccounts");
-            entity.HasKey(e => new { e.PersonId, e.SocialMediaAccountId });
+            entity.HasKey(e => e.PersonSocialMediaAccountId);
+            entity.HasIndex(e => new { e.PersonId, e.SocialMediaAccountId });
             entity.Property(e => e.Address).IsRequired();
 
             entity
@@ -101,10 +100,10 @@ public class PersonManagerServiceDbContext : DbContext
                 .OnDelete(DeleteBehavior.Cascade);
 
             entity.HasData(
-                  new PersonSocialMediaAccount { PersonId = personAId, SocialMediaAccountId = fbAccountId, Address = "pera@fb" },
-                  new PersonSocialMediaAccount { PersonId = personBId, SocialMediaAccountId = fbAccountId, Address = "mita@fb" },
-                  new PersonSocialMediaAccount { PersonId = personBId, SocialMediaAccountId = twitterAccountId, Address = "mita@tw" },
-                  new PersonSocialMediaAccount { PersonId = personCId, SocialMediaAccountId = twitterAccountId, Address = $"zika@tw" }
+                  new PersonSocialMediaAccount { PersonSocialMediaAccountId = Guid.NewGuid(), PersonId = personAId, SocialMediaAccountId = fbAccountId, Address = "pera@fb" },
+                  new PersonSocialMediaAccount { PersonSocialMediaAccountId = Guid.NewGuid(), PersonId = personBId, SocialMediaAccountId = fbAccountId, Address = "mita@fb" },
+                  new PersonSocialMediaAccount { PersonSocialMediaAccountId = Guid.NewGuid(), PersonId = personAId, SocialMediaAccountId = twitterAccountId, Address = "pera@tw" },
+                  new PersonSocialMediaAccount { PersonSocialMediaAccountId = Guid.NewGuid(), PersonId = personBId, SocialMediaAccountId = twitterAccountId, Address = $"mita@tw" }
                 );
         });
     }

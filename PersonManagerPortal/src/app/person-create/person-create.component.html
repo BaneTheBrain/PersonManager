@@ -1,6 +1,6 @@
 <div class="card">
     <div class="card-header">
-        New person
+        {{pageTitle}}
     </div>
 
     <div class="card-body">
@@ -27,7 +27,7 @@
                     <span class="invalid-feedback"> {{socialSkillValidationMessage}} </span>
                 </div>
               
-                <h6 *ngFor="let skill of socialSkills" class="pt-1">
+                <h6 *ngFor="let skill of personSocialSkills" class="pt-1">
                     <div class="btn-group">
                         <span class="btn bg-info px-3 ">{{skill}}</span>
                         <button (click)="onDeleteSocialSkill(skill)"> Delete </button>
@@ -36,13 +36,13 @@
             </div>
 
             <div class="form-group">
-                <label for="personSocialMediaAccountAddressId">Social Media Accounts</label>
+                <label for="accountAddressId">Social Media Accounts</label>
                 <br>
                 <div class="btn-group col-md-10">
-                    <select class="form-control" formControlName="selectedSocialMediaAccountId">
-                        <option *ngFor="let account of socialMediaAccounts" [value]="account.socialMediaAccountId">{{account.type}}</option>
+                    <select class="form-control" formControlName="selectedAccountId">
+                        <option *ngFor="let account of availableAccounts" [value]="account.socialMediaAccountId">{{account.type}}</option>
                     </select>
-                    <input id="personSocialMediaAccountAddressId" formControlName="personSocialMediaAccountAddress" [ngClass]="{'is-invalid': psmaValidationMessage }" class="form-control">
+                    <input id="accountAddressId" formControlName="accountAddress" [ngClass]="{'is-invalid': psmaValidationMessage }" class="form-control">
                     <button (click)="onAddPersonSocialMediaAccount()"> Add </button>
                     <span class="invalid-feedback"> {{psmaValidationMessage}} </span>
                 </div>

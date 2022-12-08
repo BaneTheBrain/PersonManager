@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { IPerson } from "../model/read/person";
+import { PersonResponse } from "../model/read/person";
 import { PersonManagerService } from "../services/person.service";
 
 @Component({
@@ -9,7 +9,7 @@ import { PersonManagerService } from "../services/person.service";
 export class PersonDetailsComponent implements OnInit
 {
     pageTitle: string = 'Person details'
-    person: IPerson | undefined;
+    person!: PersonResponse;
     errorMessage : string = '';
     private _id : string ='';
 

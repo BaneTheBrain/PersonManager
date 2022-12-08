@@ -1,8 +1,7 @@
-﻿using PersonManagerService.Domain.Abstractions;
-using PersonManagerService.Domain.DTOs;
-using PersonManagerService.Domain.Models;
+﻿using PersonManagerService.Application.DTOs;
+using PersonManagerService.Domain.Abstractions;
 
-namespace PersonManagerService.Domain.Queries.GetPerson;
+namespace PersonManagerService.Application.Queries.GetPerson;
 
 public sealed record GetPersonByIdQuery(Guid PersonId) : IQuery<PersonResponse>;
 

@@ -44,21 +44,15 @@ namespace PersonManagerService.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            PersonId = new Guid("66933f1a-d11e-4813-b1df-51f9e1ed584d"),
+                            PersonId = new Guid("d1bc0e4d-b4a5-411f-b69a-47f877b2c4e7"),
                             FirstName = "Pera",
                             LastName = "Zdera"
                         },
                         new
                         {
-                            PersonId = new Guid("bf78be81-691d-4b0d-a99c-58d9b2d35950"),
-                            FirstName = "Mita",
-                            LastName = "Brzi"
-                        },
-                        new
-                        {
-                            PersonId = new Guid("98ede1ea-68a5-4ba0-8976-b176eed0d2a4"),
-                            FirstName = "Zika",
-                            LastName = "Klinika"
+                            PersonId = new Guid("0273b148-e1ba-4697-89ef-7df4a632c913"),
+                            FirstName = "Mitar",
+                            LastName = "Mitrovic"
                         });
                 });
 
@@ -84,72 +78,82 @@ namespace PersonManagerService.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            PersonSkillId = new Guid("c33961d6-8831-4075-b207-9f18469bc423"),
+                            PersonSkillId = new Guid("4f09b36f-0b1f-40a6-8f33-39026d8e8b9c"),
                             Name = "debeo",
-                            PersonId = new Guid("66933f1a-d11e-4813-b1df-51f9e1ed584d")
+                            PersonId = new Guid("d1bc0e4d-b4a5-411f-b69a-47f877b2c4e7")
                         },
                         new
                         {
-                            PersonSkillId = new Guid("27eadae8-6ea4-4ed4-aff2-57e526df96a0"),
+                            PersonSkillId = new Guid("9de7d1cc-3407-4d4b-9a10-9f65702564f6"),
                             Name = "spor",
-                            PersonId = new Guid("66933f1a-d11e-4813-b1df-51f9e1ed584d")
+                            PersonId = new Guid("d1bc0e4d-b4a5-411f-b69a-47f877b2c4e7")
                         },
                         new
                         {
-                            PersonSkillId = new Guid("9f88b16a-c278-4e80-9185-7ecc5ae30fa0"),
-                            Name = "brz",
-                            PersonId = new Guid("bf78be81-691d-4b0d-a99c-58d9b2d35950")
+                            PersonSkillId = new Guid("8d484b2d-2097-421c-a069-5b24c8992400"),
+                            Name = "tanak",
+                            PersonId = new Guid("0273b148-e1ba-4697-89ef-7df4a632c913")
                         },
                         new
                         {
-                            PersonSkillId = new Guid("78c93bcb-7c8f-4c22-b2eb-9bfaf62978a1"),
+                            PersonSkillId = new Guid("240d37fc-0bfd-4004-a775-e3060bbb312a"),
                             Name = "jak",
-                            PersonId = new Guid("bf78be81-691d-4b0d-a99c-58d9b2d35950")
+                            PersonId = new Guid("0273b148-e1ba-4697-89ef-7df4a632c913")
                         });
                 });
 
             modelBuilder.Entity("PersonManagerService.Domain.Models.PersonSocialMediaAccount", b =>
                 {
-                    b.Property<Guid>("PersonId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("SocialMediaAccountId")
+                    b.Property<Guid>("PersonSocialMediaAccountId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Address")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("PersonId", "SocialMediaAccountId");
+                    b.Property<Guid>("PersonId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("SocialMediaAccountId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("PersonSocialMediaAccountId");
 
                     b.HasIndex("SocialMediaAccountId");
+
+                    b.HasIndex("PersonId", "SocialMediaAccountId");
 
                     b.ToTable("PersonSocialMediaAccounts", "dbo");
 
                     b.HasData(
                         new
                         {
-                            PersonId = new Guid("66933f1a-d11e-4813-b1df-51f9e1ed584d"),
-                            SocialMediaAccountId = new Guid("aeb97361-b3ec-4bd4-ab5f-ba4f47cebb30"),
-                            Address = "pera@fb"
+                            PersonSocialMediaAccountId = new Guid("cc0c20a1-c5b2-4d30-b950-95d9d04db362"),
+                            Address = "pera@fb",
+                            PersonId = new Guid("d1bc0e4d-b4a5-411f-b69a-47f877b2c4e7"),
+                            SocialMediaAccountId = new Guid("c3fd6cd5-de6f-4280-9fe2-b650e63716fb")
                         },
                         new
                         {
-                            PersonId = new Guid("bf78be81-691d-4b0d-a99c-58d9b2d35950"),
-                            SocialMediaAccountId = new Guid("aeb97361-b3ec-4bd4-ab5f-ba4f47cebb30"),
-                            Address = "mita@fb"
+                            PersonSocialMediaAccountId = new Guid("ad4d8bfb-c9ed-4102-b6aa-a658bc3b03d1"),
+                            Address = "mita@fb",
+                            PersonId = new Guid("0273b148-e1ba-4697-89ef-7df4a632c913"),
+                            SocialMediaAccountId = new Guid("c3fd6cd5-de6f-4280-9fe2-b650e63716fb")
                         },
                         new
                         {
-                            PersonId = new Guid("bf78be81-691d-4b0d-a99c-58d9b2d35950"),
-                            SocialMediaAccountId = new Guid("3d6935ac-1b0d-4c92-9fdf-c649d390bc83"),
-                            Address = "mita@tw"
+                            PersonSocialMediaAccountId = new Guid("34311ed3-31df-4e65-8785-a40d4c45581a"),
+                            Address = "pera@tw",
+                            PersonId = new Guid("d1bc0e4d-b4a5-411f-b69a-47f877b2c4e7"),
+                            SocialMediaAccountId = new Guid("626fe0fc-7877-4a50-b5df-30c075eb251f")
                         },
                         new
                         {
-                            PersonId = new Guid("98ede1ea-68a5-4ba0-8976-b176eed0d2a4"),
-                            SocialMediaAccountId = new Guid("3d6935ac-1b0d-4c92-9fdf-c649d390bc83"),
-                            Address = "zika@tw"
+                            PersonSocialMediaAccountId = new Guid("c0b0d53b-a44e-41dd-8d01-15cf00fde2d4"),
+                            Address = "mita@tw",
+                            PersonId = new Guid("0273b148-e1ba-4697-89ef-7df4a632c913"),
+                            SocialMediaAccountId = new Guid("626fe0fc-7877-4a50-b5df-30c075eb251f")
                         });
                 });
 
@@ -170,22 +174,22 @@ namespace PersonManagerService.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            SocialMediaAccountId = new Guid("aeb97361-b3ec-4bd4-ab5f-ba4f47cebb30"),
+                            SocialMediaAccountId = new Guid("c3fd6cd5-de6f-4280-9fe2-b650e63716fb"),
                             Type = "Facebook"
                         },
                         new
                         {
-                            SocialMediaAccountId = new Guid("3d6935ac-1b0d-4c92-9fdf-c649d390bc83"),
+                            SocialMediaAccountId = new Guid("626fe0fc-7877-4a50-b5df-30c075eb251f"),
                             Type = "Twitter"
                         },
                         new
                         {
-                            SocialMediaAccountId = new Guid("ce27c608-a53c-407b-9722-ad48559cc984"),
+                            SocialMediaAccountId = new Guid("7af524e3-2d31-422e-845f-54e3de69c767"),
                             Type = "LinkedIn"
                         },
                         new
                         {
-                            SocialMediaAccountId = new Guid("708abcd6-3f39-4870-89e9-a4a316056dbc"),
+                            SocialMediaAccountId = new Guid("0795d1c7-4ffc-4be7-a8eb-362b78a9e232"),
                             Type = "Telegram"
                         });
                 });

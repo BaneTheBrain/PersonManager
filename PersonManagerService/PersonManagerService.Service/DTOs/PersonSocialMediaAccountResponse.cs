@@ -1,3 +1,3 @@
-﻿namespace PersonManagerService.Domain.DTOs;
+﻿namespace PersonManagerService.Application.DTOs;
 
 public sealed record PersonSocialMediaAccountResponse(string Address, string Type, Guid SocialMediaAccountId);

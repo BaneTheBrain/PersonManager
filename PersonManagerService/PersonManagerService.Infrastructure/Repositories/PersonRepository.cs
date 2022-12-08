@@ -10,15 +10,21 @@ public class PersonRepository : BaseRepository<Person>, IPersonRepository
 {
     public PersonRepository(PersonManagerServiceDbContext dbContext) : base(dbContext) { }
 
-    public void Create(Person person)
+    public async Task UpdatePerson(Person person, CancellationToken cancellationToken)
     {
-        //perform some validation, etc..
-        base.Insert(person);
+        var dbPerson = await GetPersonWithSocialMediaAccountsAndSkills(person.PersonId, cancellationToken);
+        if (dbPerson is not null)
+        {
+            dbPerson.FirstName = person.FirstName;
+            dbPerson.LastName = person.LastName;
+            dbPerson.PersonSkills = person.PersonSkills;
+            dbPerson.PersonSocialMediaAccounts = person.PersonSocialMediaAccounts;
+        }
     }
 
-    public Task<Person> GetPersonWithSocialMediaAccountsAndSkills(Guid id, CancellationToken cancellationToken)
+    public async Task<Person> GetPersonWithSocialMediaAccountsAndSkills(Guid id, CancellationToken cancellationToken)
     {
-        return _dbSet
+        return await _dbSet
                 .Include(p => p.PersonSocialMediaAccounts)
                 .ThenInclude(psma => psma.SocialMediaAccount)
                 .Include(p => p.PersonSkills)

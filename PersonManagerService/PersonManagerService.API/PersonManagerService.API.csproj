@@ -27,6 +27,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PersonManagerService.Infrastructure\PersonManagerService.Infrastructure.csproj" />
+    <ProjectReference Include="..\PersonManagerService.Service\PersonManagerService.Application.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PersonManagerService.Domain.Abstractions;
 using PersonManagerService.Infrastructure.Contexts;
-using System.Collections.Generic;
 using System.Linq.Expressions;
 
 namespace PersonManagerService.Persistance.Repositories;
@@ -18,7 +17,11 @@ public abstract class BaseRepository<T> : IBaseRepository<T> where T : class
     }
     public virtual void Insert(T entity) => _dbSet.Add(entity);
 
-    public virtual void Update(T entity) => _dbSet.Update(entity);
+    public virtual void Update(T entity)
+    {
+        //_dbSet.Update(entity);
+        _dbContext.Attach(entity).State = EntityState.Modified;
+    }
 
     public virtual void Delete(T entity) => _dbSet.Remove(entity);
 
