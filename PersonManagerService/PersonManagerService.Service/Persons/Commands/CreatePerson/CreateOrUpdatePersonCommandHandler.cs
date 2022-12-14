@@ -1,10 +1,8 @@
 ﻿using AutoMapper;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using PersonManagerService.Domain.Abstractions;
 using PersonManagerService.Domain.Models;
-using PersonManagerService.Infrastructure.Contexts;
 
 namespace PersonManagerService.Application.Commands.CreatePerson;
 
