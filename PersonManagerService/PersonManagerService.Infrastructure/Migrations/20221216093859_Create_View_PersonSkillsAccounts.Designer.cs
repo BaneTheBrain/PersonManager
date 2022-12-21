@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PersonManagerService.Infrastructure.Contexts;
 
@@ -11,9 +12,10 @@ using PersonManagerService.Infrastructure.Contexts;
 namespace PersonManagerService.Infrastructure.Migrations
 {
     [DbContext(typeof(PersonManagerServiceDbContext))]
-    partial class PersonManagerServiceDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221216093859_Create_View_PersonSkillsAccounts")]
+    partial class Create_View_PersonSkillsAccounts
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

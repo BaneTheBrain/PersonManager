@@ -7,6 +7,9 @@ using Polly.CircuitBreaker;
 using PersonManagerService.Application.Abstractions;
 using PersonManagerService.Application.DTOs;
 using PPersonManagerService.Application.Queries.GetPerson;
+using PersonManagerService.Domain.Mapping;
+using System;
+using PersonManagerService.Application.Helpers;
 
 namespace PersonManagerService.Application.Queries.GetPersons;
 
@@ -37,16 +40,39 @@ public class GetPersonsQueryHandler : IRequestHandler<GetPersonsQuery, IEnumerab
                 throw new Exception("Person repository unavailable.");
             }
 
-            var persons = await _resilientService.ResilientPolicy.ExecuteAsync(() =>_uow.PersonRepository.GetPersonWithSocialMediaAccountsAndSkills(cancellationToken));
-            var retVal = persons.Select(person => _mapper.Map<Person, PersonResponse>(person));
+            //var persons = await _resilientService.ResilientPolicy.ExecuteAsync(() => _uow.PersonRepository.GetPersonWithSocialMediaAccountsAndSkills(cancellationToken));
+            //var retVal = persons.Select(person => _mapper.Map<Person, PersonResponse>(person));
+
+            var people = await _uow.PersonRepository.GetPeople(cancellationToken);
+            var retVal2 = Map(people);
 
             _logger.LogInformation($"{nameof(GetPersonsQueryHandler)} -> Handle request suceeded.");
-            return retVal;
+            return retVal2;
         }
         catch
         {
             _logger.LogError($"{nameof(GetPersonsQueryHandler)} -> Handle request failed.");
             throw;
         }
+    }
+
+    private IEnumerable<PersonResponse> Map(IEnumerable<PersonSkillAccount> people)
+    {
+        var responses = new List<PersonResponse>();
+
+        //to do: refactor it
+        return people.GroupBy(x => x.PersonId).Select(g => 
+            new PersonResponse(
+                g.Key,
+                g.First().FirstName,
+                g.First().LastName,
+                $"{g.First().FirstName} {g.First().LastName}".Trim().GetVovelsNumber(),
+                $"{g.First().FirstName} {g.First().LastName}".Trim().GetConstenantsNumber(),
+                $"{g.First().FirstName} {g.First().LastName}".Trim(),
+                $"{g.First().FirstName} {g.First().LastName}".Trim().GetReversed(),
+                g.Select(x => x.SkillName).Distinct(),
+                g.Select(y => new PersonSocialMediaAccountResponse(y.AccountAddress, y.AccountType, y.AccountId.HasValue ? y.AccountId.Value : Guid.Empty)).Distinct()
+                )
+        );
     }
 }

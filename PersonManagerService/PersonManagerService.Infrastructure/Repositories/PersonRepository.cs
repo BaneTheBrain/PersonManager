@@ -3,6 +3,7 @@ using PersonManagerService.Domain.Abstractions;
 using PersonManagerService.Domain.Models;
 using PersonManagerService.Infrastructure.Contexts;
 using System;
+using System.Collections.Generic;
 
 namespace PersonManagerService.Persistance.Repositories;
 
@@ -24,19 +25,24 @@ public class PersonRepository : BaseRepository<Person>, IPersonRepository
 
     public async Task<Person> GetPersonWithSocialMediaAccountsAndSkills(Guid id, CancellationToken cancellationToken)
     {
-        return await _dbSet
-                .Include(p => p.PersonSocialMediaAccounts)
-                .ThenInclude(psma => psma.SocialMediaAccount)
-                .Include(p => p.PersonSkills)
-                .FirstOrDefaultAsync(x => x.PersonId == id, cancellationToken);
+        return await GetPeopleWithAssociatedReferences().FirstOrDefaultAsync(x => x.PersonId == id, cancellationToken);
     }
 
     public async Task<IEnumerable<Person>> GetPersonWithSocialMediaAccountsAndSkills(CancellationToken cancellationToken)
     {
-        return await _dbSet
-              .Include(p => p.PersonSocialMediaAccounts)
-              .ThenInclude(psma => psma.SocialMediaAccount)
-              .Include(p => p.PersonSkills)
-              .ToListAsync();
+        return await GetPeopleWithAssociatedReferences().ToListAsync();
+    }
+
+    public async Task<IEnumerable<PersonSkillAccount>> GetPeople(CancellationToken cancellationToken)
+    {
+       return await _dbContext.PersonSkillsAccounts.ToListAsync();
+    }
+
+    private IQueryable<Person> GetPeopleWithAssociatedReferences()
+    {
+        return _dbSet
+             .Include(p => p.PersonSocialMediaAccounts)
+             .ThenInclude(psma => psma.SocialMediaAccount)
+             .Include(p => p.PersonSkills);
     }
 }

@@ -13,6 +13,8 @@ public class PersonManagerServiceDbContext : DbContext
     public virtual DbSet<Person> Persons { get; set; }
     public virtual DbSet<PersonSkill> PersonSkills { get; set; }
     public virtual DbSet<PersonSocialMediaAccount> PersonSocialMediaAccounts { get; set; }
+    public virtual DbSet<PersonSkillAccount> PersonSkillsAccounts { get; set; }
+
 
     #region Configuration
 
@@ -106,6 +108,9 @@ public class PersonManagerServiceDbContext : DbContext
                   new PersonSocialMediaAccount { PersonSocialMediaAccountId = Guid.NewGuid(), PersonId = personBId, SocialMediaAccountId = twitterAccountId, Address = $"mita@tw" }
                 );
         });
+
+        modelBuilder.Entity<PersonSkillAccount>()
+            .ToView("PersonSkillsAccounts").HasNoKey();
     }
     #endregion
 }
